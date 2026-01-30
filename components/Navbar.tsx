@@ -49,12 +49,15 @@ const Navbar = () => {
             width={20}
             height={20}
           />
+          <div className="relative">
           <Image
             src="/assets/basket_icon.png"
             alt="basket icon"
             width={20}
             height={20}
           />
+          <div className="absolute w-2.5 h-2.5 bg-[#FF6347] rounded-full -top-2 -right-2"></div>
+          </div>
           <button className="border border-[#FF6347] hover:bg-[#fff4f2] cursor-pointer text-black py-2 px-4 rounded-full">
             sign in
           </button>
