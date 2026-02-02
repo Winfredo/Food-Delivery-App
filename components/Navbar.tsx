@@ -6,7 +6,7 @@ const Navbar = () => {
   const [activeItem, setActiveItem] = useState("home");
   return (
     <div className="w-full h-16">
-      <div className="flex w-[80%] h-full  mx-auto items-center justify-between">
+      <div className="flex h-full items-center justify-between">
         {/* Div for the logo image. */}
         <div>
           <Image src="/assets/logo.png" alt="Logo" width={200} height={200} />

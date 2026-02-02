@@ -1,3 +1,14 @@
 @import "tailwindcss";
 
+@keyframes fadeIn{
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
 
+.animation-fadeIn {
+  animation: fadeIn 3s ease-in-out;
+}
