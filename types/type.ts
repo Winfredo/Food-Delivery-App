@@ -11,7 +11,7 @@ export type Props = {
 }
 
 export type FoodType = {
-    _id?: string
+    _id: string
     name?: string
     rating?: string
     image?: string
@@ -20,6 +20,14 @@ export type FoodType = {
     category?: string
 }
 
-export type StoreContextValue = {
-  foodList: FoodType[]
+export type CartItems = {
+  [key: string]: number 
+}
+
+export type StoreContextType = {
+    foodList?: FoodType[]; 
+    cartItems?: CartItems;
+    setCartItems: React.Dispatch<React.SetStateAction<CartItems>>;
+    addToCart: (foodId: string) => void;
+    removeFromCart: (foodId: string) => void;
 }
