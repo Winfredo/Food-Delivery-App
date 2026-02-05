@@ -35,7 +35,7 @@ export const menuList: MenuType[] = [
        image: "/assets/menu_8.png"
     }]
 
-    export const foodList: FoodType[] = [
+export const foodList: FoodType[] = [
     {
         _id: "1",
         name: "Greek salad",
