@@ -5,14 +5,14 @@ const Footer = () => {
     <div className=" md:h-90 w-full bg-[#181313] mt-15">
       <div className="max-w-312.5 flex items-center justify-center  h-full mx-auto">
         <div className="flex flex-1 flex-col ">
-          <div className=" flex  w-full flex-col md:flex-row  items-start justify-evenly">
+          <div className=" flex  w-full flex-col md:flex-row items-center md:items-start justify-evenly">
             <div className=" w-[320px] flex flex-col mt-2 items-center md:items-start justify-center md:mb-20 ">
               <img
                 src="./assets/logo.png"
                 alt="logo"
                 className=" w-auto"
               />
-              <p className="text-[14px]  my-3 text-[#cfcfcf]">
+              <p className="text-[14px] w-50 md:w-full text-center md:text-left my-3 text-[#cfcfcf]">
                 Our mission is to satisfy your cravings and elevate your dining
                 experience, one delicious meal at a time.
               </p>
@@ -58,6 +58,7 @@ const Footer = () => {
         </div>
       </div>
     </div>
+
   );
 };
 
