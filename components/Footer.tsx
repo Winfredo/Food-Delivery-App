@@ -7,11 +7,7 @@ const Footer = () => {
         <div className="flex flex-1 flex-col ">
           <div className=" flex  w-full flex-col md:flex-row items-center md:items-start justify-evenly">
             <div className=" w-[320px] flex flex-col mt-2 items-center md:items-start justify-center md:mb-20 ">
-              <img
-                src="./assets/logo.png"
-                alt="logo"
-                className=" w-auto"
-              />
+              <img src="./assets/logo.png" alt="logo" className=" w-auto" />
               <p className="text-[14px] w-50 md:w-full text-center md:text-left my-3 text-[#cfcfcf]">
                 Our mission is to satisfy your cravings and elevate your dining
                 experience, one delicious meal at a time.
@@ -27,9 +23,7 @@ const Footer = () => {
               <p className="font-semibold text-[16px] text-white pb-3">
                 COMPANY
               </p>
-              <p className="font-light text-[14px] text-[#cfcfcf] pb-3">
-                Home
-              </p>
+              <p className="font-light text-[14px] text-[#cfcfcf] pb-3">Home</p>
               <p className="font-light text-[14px] text-[#cfcfcf] pb-3">
                 About us
               </p>
@@ -54,11 +48,12 @@ const Footer = () => {
             </div>
           </div>
           <hr className="my-2.5 mx-auto border-none bg-[#e2e2e2] h-0.5 w-[90%]" />
-          <p className="text-white text-center mt-5">Copyright © 2026 All rights reserved</p>
+          <p className="text-white text-center mt-5">
+            Copyright © 2026 All rights reserved
+          </p>
         </div>
       </div>
     </div>
-
   );
 };
 

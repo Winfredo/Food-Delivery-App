@@ -30,14 +30,13 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased `}
       >
-        <div className="w-[80%] mx-auto"> 
-        <StoreContextProvider>
-        <Navbar />
-        {children}
-        </StoreContextProvider>
+        <div className="w-[80%] mx-auto">
+          <StoreContextProvider>
+            <Navbar />
+            {children}
+          </StoreContextProvider>
         </div>
         <Footer />
-
       </body>
     </html>
   );

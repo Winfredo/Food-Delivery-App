@@ -17,20 +17,20 @@ const StoreContextProvider = (props: any) => {
     }
   };
 
- const removeFromCart = (foodId: string) => {
-  setCartItems((prev) => {
-    if (prev[foodId] === 1) {
-      const newItems = { ...prev }
-      delete newItems[foodId] 
-      return newItems
-    }
-    return { ...prev, [foodId]: prev[foodId] - 1 }
-  })
-};
+  const removeFromCart = (foodId: string) => {
+    setCartItems((prev) => {
+      if (prev[foodId] === 1) {
+        const newItems = { ...prev };
+        delete newItems[foodId];
+        return newItems;
+      }
+      return { ...prev, [foodId]: prev[foodId] - 1 };
+    });
+  };
 
-useEffect(()=> {
-    console.log(cartItems)
-},[cartItems])
+  useEffect(() => {
+    console.log(cartItems);
+  }, [cartItems]);
   const storeValue: StoreContextType = {
     foodList: foodList,
     cartItems,
