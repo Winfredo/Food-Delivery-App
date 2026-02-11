@@ -6,15 +6,15 @@ const Navbar = () => {
   const [activeItem, setActiveItem] = useState("home");
   return (
     <div className="w-full h-16">
-      <div className="flex h-full items-center justify-between">
+      <div className="flex h-full items-center justify-between max-xl:w-35">
         {/* Div for the logo image. */}
-        <div>
+        <div className="">
           <Image src="/assets/logo.png" alt="Logo" width={200} height={200} />
         </div>
 
         {/* Div for the nav links */}
 
-        <ul className="flex items-center gap-4">
+        <ul className="flex items-center gap-4 max-xl:gap-5">
           <li
             className={`pb-2 cursor-pointer transition duration-300 border-b-2 ${activeItem === "home" ? "border-[#FF6347]" : "border-transparent hover:border-[#FF6347]"}`}
             onClick={() => setActiveItem("home")}
