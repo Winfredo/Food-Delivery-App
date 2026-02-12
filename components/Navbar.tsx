@@ -2,13 +2,13 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { LoginPopupProps } from "@/types/type";
 
-const Navbar = () => {
+const Navbar = ({ setShowLoginPopup,showLoginPopup }: LoginPopupProps) => {
   const [activeItem, setActiveItem] = useState("home");
   return (
     <div className="w-full h-16 px-4 sm:px-6 fixed top-0 left-0 z-50 bg-white shadow-md">
       <div className="flex h-full items-center justify-between max-w-7xl mx-auto">
-        {/* Logo - reduced on smaller screens */}
         <div className="w-30 sm:w-37.5 md:w-50">
           <Link href="#hero"><Image
             src="/assets/logo.png"
@@ -19,8 +19,6 @@ const Navbar = () => {
           /></Link>
         </div>
         
-
-        {/* Nav links - hidden on mobile, visible on md and up */}
         <ul className="hidden md:flex items-center gap-4 lg:gap-5">
          <Link href="#hero">
          <li
@@ -78,7 +76,7 @@ const Navbar = () => {
           </div>
 
           {/* Sign in - visible on all screens */}
-          <button className="border border-[#FF6347] hover:bg-[#fff4f2] cursor-pointer text-black py-1 px-3 sm:py-2 sm:px-4 rounded-full text-xs sm:text-base whitespace-nowrap">
+          <button onClick={()=> setShowLoginPopup(true)} className="border border-[#FF6347] hover:bg-[#fff4f2] cursor-pointer text-black py-1 px-3 sm:py-2 sm:px-4 rounded-full text-xs sm:text-base whitespace-nowrap">
             sign in
           </button>
         </div>

@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import StoreContextProvider from "@/context/StoreContextProvider";
 import Footer from "@/components/Footer";
+import LoginPopup from "@/components/LoginPopup";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,14 +26,16 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased `}
       >
         <div className="w-[80%] mx-auto">
+          
           <StoreContextProvider>
-            <Navbar />
+            
             {children}
           </StoreContextProvider>
         </div>
