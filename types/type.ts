@@ -29,3 +29,8 @@ export type StoreContextType = {
   addToCart: (foodId: string) => void;
   removeFromCart: (foodId: string) => void;
 };
+
+export type LoginPopupProps = {
+setShowLoginPopup: React.Dispatch<React.SetStateAction<boolean>>;
+showLoginPopup: boolean;
+};
