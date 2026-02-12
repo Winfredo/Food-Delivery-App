@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-@keyframes fadeIn{
+@keyframes fadeIn {
   from {
     opacity: 0;
   }
@@ -11,4 +11,18 @@
 
 .animation-fadeIn {
   animation: fadeIn 3s ease-in-out;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+html {
+  scroll-padding-top: 64px;
+  scroll-behavior: smooth;
 }
