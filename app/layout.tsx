@@ -36,7 +36,7 @@ export default function RootLayout({
             {children}
           </StoreContextProvider>
         </div>
-        <Footer />
+        <section id="footer"><Footer /></section>
       </body>
     </html>
   );

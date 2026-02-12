@@ -8,9 +8,10 @@ const page = () => {
   const [category, setCategory] = useState("All");
 
   return (
-    <div>
-      <Header />
-      <Exploremenu category={category} setCategory={setCategory} />
+    <div className="pt-16">
+
+      <section id="herosection"><Header /></section>
+      <section id="explore" className="pt-5"><Exploremenu category={category} setCategory={setCategory} /></section>
       <FoodDisplay category={category} />
     </div>
   );
