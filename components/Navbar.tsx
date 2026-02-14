@@ -4,10 +4,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { LoginPopupProps } from "@/types/type";
 
-const Navbar = ({ setShowLoginPopup,showLoginPopup }: LoginPopupProps) => {
+const Navbar = ({ setShowLoginPopup }: LoginPopupProps) => {
   const [activeItem, setActiveItem] = useState("home");
   return (
-    <div className="w-full h-16 px-4 sm:px-6 fixed top-0 left-0 z-50 bg-white shadow-md">
+    //fixed top-0 left-0 z-50
+    <div className="w-full h-16 px-4 sm:px-6 bg-white shadow-md">
       <div className="flex h-full items-center justify-between max-w-7xl mx-auto">
         <div className="w-30 sm:w-37.5 md:w-50">
           <Link href="#hero"><Image
