@@ -12,8 +12,8 @@ const page = () => {
 
   return (
     <div >
-      {showLoginPopup && <LoginPopup />}
-      <Navbar setShowLoginPopup={setShowLoginPopup} showLoginPopup={showLoginPopup}/>
+      {showLoginPopup && <LoginPopup setShowLoginPopup={setShowLoginPopup} />}
+      <Navbar setShowLoginPopup={setShowLoginPopup} />
 
       <div className="pt-16">
       <section id="herosection"><Header /></section>
