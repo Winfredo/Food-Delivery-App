@@ -11,7 +11,7 @@ const Header = () => {
           mission is to satisfy your cravings and elevate your dining
           experience, one delicious meal at a time.
         </p>
-        <button className="border-none bg-white text-[#747474] text-[13px] lg:text-[16px] font-semibold rounded-[50px] py-[0.5vw] px-[1vw] lg:py-[1vw] lg:px-[2vw]">View Menu</button>
+        <button className="border-none bg-white text-[#747474] text-[13px] lg:text-[16px] cursor-pointer font-semibold rounded-[50px] py-[0.5vw] px-[1vw] lg:py-[1vw] lg:px-[2vw]">View Menu</button>
       </div>
     </div>
   );
