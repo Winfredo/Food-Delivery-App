@@ -32,5 +32,5 @@ export type StoreContextType = {
 
 export type LoginPopupProps = {
 setShowLoginPopup: React.Dispatch<React.SetStateAction<boolean>>;
-showLoginPopup: boolean;
+showLoginPopup?: boolean;
 };
