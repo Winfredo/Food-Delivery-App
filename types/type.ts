@@ -23,8 +23,8 @@ export type CartItems = {
 };
 
 export type StoreContextType = {
-  foodList?: FoodType[];
-  cartItems?: CartItems;
+  foodList: FoodType[];
+  cartItems: CartItems;
   setCartItems: React.Dispatch<React.SetStateAction<CartItems>>;
   addToCart: (foodId: string) => void;
   removeFromCart: (foodId: string) => void;

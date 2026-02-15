@@ -31,6 +31,7 @@ const StoreContextProvider = (props: any) => {
   useEffect(() => {
     console.log(cartItems);
   }, [cartItems]);
+  
   const storeValue: StoreContextType = {
     foodList: foodList,
     cartItems,
