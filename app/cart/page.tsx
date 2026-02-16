@@ -21,12 +21,11 @@ const page = () => {
         {foodList.map((item, index) => {
           if (cartItems[item._id] > 0) {
             return (
-              <div>
-                <div
-                  key={index}
+              <div key={index}>
+                <div  
                   className=" my-2.5 mx-0 text-black grid grid-cols-[1fr_1.5fr_1fr_1fr_1fr_0.5fr] items-center text-[max(1vw,12px)]"
                 >
-                  <img src={item.image} className="w-12.5" />
+                  <img src={item.image} className="md:w-12.5 w-10" />
                   <p>{item.name}</p>
                   <p>${item.price}</p>
                   <p>{cartItems[item._id]}</p>
@@ -42,7 +41,7 @@ const page = () => {
         })}
       </div>
       {/* div for the subtotal beneath */}
-      <div className="mt-20 flex justify-between gap-[max(12vw,20px)]">
+      <div className="mt-20 flex md:flex-row flex-col-reverse justify-between gap-[max(12vw,20px)]">
         <div className="cart-total flex-1 flex flex-col gap-5">
           <h2>Cart Totals</h2>
           <div className=" flex justify-between text-[#555]">
@@ -62,7 +61,7 @@ const page = () => {
           </div>
           <button className="px-0 rounded-lg py-3.5 border-none text-white bg-[#FF6347] w-[max(15vw,200px)] cursor-pointer">Proceed to Checkout</button>
         </div>
-        <div className="cart-promo-code flex-1">
+        <div className="cart-promo-code justify-start md:justify-end flex-1">
           <div>
             <h2 className="text-[#555]">Have a promo code? Enter it here:</h2>
             <div className=" mt-2.5 flex justify-between align-center bg-[#eaeaea] rounded-sm">
