@@ -13,7 +13,7 @@ export type FoodType = {
   name?: string;
   rating?: string;
   image?: string;
-  price?: number;
+  price: number;
   description?: string;
   category?: string;
 };
