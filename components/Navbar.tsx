@@ -10,7 +10,7 @@ const Navbar = ({ setShowLoginPopup }: LoginPopupProps) => {
     <div className="w-full h-16 px-4 fixed top-0 left-0 z-50 sm:px-6 bg-white shadow-md">
       <div className="flex h-full items-center justify-between max-w-7xl mx-auto">
         <div className="w-30 sm:w-37.5 md:w-50">
-          <Link href="#hero"><Image
+          <Link href="/"><Image
             src="/assets/logo.png"
             alt="Logo"
             width={200}
