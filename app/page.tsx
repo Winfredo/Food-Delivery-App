@@ -8,18 +8,16 @@ import LoginPopup from "@/components/LoginPopup";
 
 const page = () => {
   const [category, setCategory] = useState("All");
-  const [showLoginPopup, setShowLoginPopup] = useState(false);
-
   return (
-    <div >
-      {showLoginPopup && <LoginPopup setShowLoginPopup={setShowLoginPopup} />}
-      <Navbar setShowLoginPopup={setShowLoginPopup} />
-
-      <div className="pt-16">
-      <section id="herosection"><Header /></section>
-      <section id="explore" className="pt-5"><Exploremenu category={category} setCategory={setCategory} /></section>
-      <FoodDisplay category={category} />
-
+    <div>
+      <div className="pt-3">
+        <section id="herosection">
+          <Header />
+        </section>
+        <section id="explore" className="pt-5">
+          <Exploremenu category={category} setCategory={setCategory} />
+        </section>
+        <FoodDisplay category={category} />
       </div>
     </div>
   );

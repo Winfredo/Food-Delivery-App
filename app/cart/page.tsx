@@ -6,7 +6,7 @@ const page = () => {
 
   const {cartItems,foodList, removeFromCart,addToCart} = useContext(storeContext)!
   return (
-    <div className='cart'>
+    <div className=''>
      <div className='cart-items'>
       <div className='cart-items-title'>
         <p>Items</p>
