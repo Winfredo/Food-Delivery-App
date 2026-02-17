@@ -3,7 +3,7 @@ import React, { useContext } from "react";
 import { storeContext } from "@/context/StoreContextProvider";
 
 const page = () => {
-  const { cartItems, foodList, removeFromCart, addToCart } =
+  const { cartItems, foodList, removeFromCart,getTotalCartAmount } =
     useContext(storeContext)!;
   return (
     <div className="mt-25">
@@ -30,7 +30,7 @@ const page = () => {
                   <p>${item.price}</p>
                   <p>{cartItems[item._id]}</p>
                   <p>${item.price * cartItems[item._id]}</p>
-                  <button onClick={() => removeFromCart(item._id)}>
+                  <button onClick={() => removeFromCart(item._id)} className="bg-[#FF6347] text-white p-1 rounded-[50px] cursor-pointer">
                     Remove
                   </button>
                 </div>
@@ -46,18 +46,18 @@ const page = () => {
           <h2>Cart Totals</h2>
           <div className=" flex justify-between text-[#555]">
             <p>Subtotal</p>
-            <p>{0}</p>
+            <p>${getTotalCartAmount()}</p>
           </div>
           <hr className="my-1  border-none bg-[#e2e2e2] h-px" />
           <div className=" flex justify-between text-[#555]">
             <p>Delivery Fee</p>
-            <p>{20}</p>
+            <p>${10}</p>
           </div>
           <hr className="my-1  border-none bg-[#e2e2e2] h-px" />
 
-          <div className=" flex justify-between text-[#555]">
+          <div className=" flex justify-between text-[#555] text-[max(1.3vw,16px)] font-bold">
             <p>Total</p>
-            <p>{10}</p>
+            <p>${getTotalCartAmount() + 10}</p>
           </div>
           <button className="px-0 rounded-lg py-3.5 border-none text-white bg-[#FF6347] w-[max(15vw,200px)] cursor-pointer">Proceed to Checkout</button>
         </div>
