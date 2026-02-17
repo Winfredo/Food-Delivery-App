@@ -1,11 +1,13 @@
 "use client";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { LoginPopupProps } from "@/types/type";
+import { storeContext } from "@/context/StoreContextProvider";
 
 const Navbar = ({ setShowLoginPopup }: LoginPopupProps) => {
   const [activeItem, setActiveItem] = useState("home");
+  const {getTotalCartAmount} = useContext(storeContext)!;
   return (
     <div className="w-full h-16 px-4 fixed top-0 left-0 z-50 sm:px-6 bg-white shadow-md">
       <div className="flex h-full items-center justify-between max-w-7xl mx-auto">
@@ -72,7 +74,7 @@ const Navbar = ({ setShowLoginPopup }: LoginPopupProps) => {
               height={20}
               className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6"
             /></Link>
-            <div className="absolute w-2 h-2 sm:w-2.5 sm:h-2.5 bg-[#FF6347] rounded-full -top-1.5 -right-1.5 sm:-top-2 sm:-right-2"></div>
+            <div className={getTotalCartAmount() === 0 ? "" : "absolute w-2 h-2 sm:w-2.5 sm:h-2.5 bg-[#FF6347] rounded-full -top-1.5 -right-1.5 sm:-top-2 sm:-right-2"}></div>
           </div>
 
           {/* Sign in - visible on all screens */}
