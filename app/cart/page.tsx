@@ -1,10 +1,15 @@
 "use client";
 import React, { useContext } from "react";
 import { storeContext } from "@/context/StoreContextProvider";
-
+import { useRouter } from "next/navigation";
 const page = () => {
   const { cartItems, foodList, removeFromCart,getTotalCartAmount } =
     useContext(storeContext)!;
+    const router = useRouter();
+
+    const handleRouteToCheckout = () => {
+      router.push("/place-order");
+    }
   return (
     <div className="mt-25">
       <div className="cart-items">
@@ -51,15 +56,15 @@ const page = () => {
           <hr className="my-1  border-none bg-[#e2e2e2] h-px" />
           <div className=" flex justify-between text-[#555]">
             <p>Delivery Fee</p>
-            <p>${10}</p>
+            <p>${getTotalCartAmount()=== 0 ? 0 : 5}</p>
           </div>
           <hr className="my-1  border-none bg-[#e2e2e2] h-px" />
 
           <div className=" flex justify-between text-[#555] text-[max(1.3vw,16px)] font-bold">
             <p>Total</p>
-            <p>${getTotalCartAmount() + 10}</p>
+            <p>${getTotalCartAmount()=== 0 ? 0 : getTotalCartAmount() + 5}</p>
           </div>
-          <button className="px-0 rounded-lg py-3.5 border-none text-white bg-[#FF6347] w-[max(15vw,200px)] cursor-pointer">Proceed to Checkout</button>
+          <button onClick={()=>handleRouteToCheckout()} className="px-0 rounded-lg py-3.5 border-none text-white bg-[#FF6347] w-[max(15vw,200px)] cursor-pointer">Proceed to Checkout</button>
         </div>
         <div className="cart-promo-code justify-start md:justify-end flex-1">
           <div>
