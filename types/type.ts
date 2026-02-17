@@ -28,6 +28,7 @@ export type StoreContextType = {
   setCartItems: React.Dispatch<React.SetStateAction<CartItems>>;
   addToCart: (foodId: string) => void;
   removeFromCart: (foodId: string) => void;
+  getTotalCartAmount: () => number;
 };
 
 export type LoginPopupProps = {
