@@ -1,15 +1,20 @@
 import express from 'express';
 import cors from 'cors'
 import { connectDB } from './config/db.js';
+import dotenv from 'dotenv';
+import foodRoute from './routes/foodRoute.js';
 
 const app = express();
 const PORT = 4000;
 
 app.use(cors());
+dotenv.config({quiet: true});
 app.use(express.json());
 
 //db connection
-connectDB();
+await connectDB();
+
+app.use('/api/food', foodRoute);
 
 app.get("/", (req,res)=> {
     res.send('Hello World!');
@@ -18,5 +23,3 @@ app.get("/", (req,res)=> {
 app.listen(PORT, ()=> {
     console.log(`Server started on port ${PORT}`);
 });
-
-//mongodb+srv://winfred_db_user:sWRbm5OS0eB4IAMu@cluster0.vkyv9wk.mongodb.net/?
