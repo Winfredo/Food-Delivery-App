@@ -25,7 +25,7 @@ import FoodService from '../services/food.service.js';
 
  const deleteFood = async (req, res, next) => {
     try {
-        const foodId = req.params.id || req.body.id;
+        const foodId = req.body.id;
         const food = await FoodService.deleteFood(foodId);
         if (!food) {
             return res.status(404).json({ message: 'Food not found', success: false });
