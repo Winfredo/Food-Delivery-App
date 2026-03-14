@@ -15,6 +15,8 @@ app.use(express.json());
 await connectDB();
 
 app.use('/api/food', foodRoute);
+app.use('/images', express.static('uploads'));
+
 
 app.get("/", (req,res)=> {
     res.send('Hello World!');
