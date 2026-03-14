@@ -1,29 +1,22 @@
-import fs from 'fs';
-import foodModel from '../models/foodModel.js';
-
+import FoodService from '../services/food.service.js';
  const createFood = async (req, res, next) => {
-    
-    let image_filename = req.file ? `${req.file.filename}` : null;
-    const food = new foodModel({
-        name: req.body.name,
-        description: req.body.description,
-        price: req.body.price,
-        image: image_filename,
-        category: req.body.category
-    })
     try {
-         await food.save();
-         res.status(201).json({ message: 'Food created successfully',success: true });
+      const food = await FoodService.createFood(req.body, req.file);
+      if (!food) {
+        return res.status(400).json({ message: 'Failed to create food', success: false });
+      }
+
+      res.status(201).json({ message: 'Food created successfully', success: true, data: food });
     } catch (error) {
-        console.error('Error creating food:', error);
-        return next(error);
+      console.error('Error creating food:', error);
+      return next(error);
     }
  }
 
  const listFood = async (req,res, next) => {
      try {
-        const foods = await foodModel.find({});
-        res.status(200).json({ foods, success: true });
+        const foods = await FoodService.listFood();
+        res.status(200).json({message: 'Foods listed successfully', success: true, data: foods || [] });
      }catch (error) {
         console.error('Error listing food:', error);
         return next(error);
@@ -32,8 +25,11 @@ import foodModel from '../models/foodModel.js';
 
  const deleteFood = async (req, res, next) => {
     try {
-        const foodId = req.params.id;
-        const food = await foodModel.findByIdAndDelete(foodId);
+        const foodId = req.params.id || req.body.id;
+        const food = await FoodService.deleteFood(foodId);
+        if (!food) {
+            return res.status(404).json({ message: 'Food not found', success: false });
+        }
         res.status(200).json({ message: 'Food deleted successfully', success: true });
     } catch (error) {
         console.error('Error deleting food:', error);
