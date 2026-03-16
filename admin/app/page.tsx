@@ -5,13 +5,8 @@ import React from 'react'
 
 const page = () => {
   return (
-    <div>
-      <Navbar />
-      <hr />
-      <div className='app-content flex'>
-        <Sidebar />
-      </div>
-      
+    <div className='text-center w-full'>
+      <p >Admin Dashboard</p>
     </div>
   )
 }
