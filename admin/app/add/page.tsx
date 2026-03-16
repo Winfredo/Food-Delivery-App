@@ -1,6 +1,10 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { toast, Bounce } from "react-toastify"; // Import toast here!
+import "react-toastify/dist/ReactToastify.css";
 const page = () => {
+  const url = "http://localhost:4000";
   const [image, setImage] = useState<File | null>(null);
   const [data, setData] = useState({
     name: "",
@@ -18,13 +22,59 @@ const page = () => {
     setData((prev) => ({ ...prev, [name]: value }));
   };
 
+  const onSubmitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData();
+    formData.append("name", data.name);
+    formData.append("description", data.description);
+    formData.append("category", data.category);
+    formData.append("price", data.price);
+    if (image) {
+      formData.append("image", image);
+    }
+    const response = await axios.post(`${url}/api/food/create`, formData);
+
+    if (response.data.success) {
+      setData({
+        name: "",
+        description: "",
+        category: "Salad",
+        price: "",
+      });
+      setImage(null);
+      toast.success(response.data.message, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        transition: Bounce,
+      });
+    }else {
+        toast.error(response.data.message, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: false,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+            transition: Bounce,
+          });
+    }
+  };
+
   useEffect(() => {
     console.log(data);
   }, [data]);
 
   return (
     <div className="w-[70%] ml-[max(5vw,25px)] mt-12 text-[#6d6d6d] text-base">
-      <form className="flex flex-col gap-5">
+      <form className="flex flex-col gap-5" onSubmit={onSubmitHandler}>
         {/* Upload Image */}
         <div className="flex flex-col gap-2">
           <p className="font-medium">Upload Image</p>
@@ -47,7 +97,7 @@ const page = () => {
             id="image"
             hidden
             required
-          />{" "}
+          />
         </div>
 
         {/* Product Name */}
@@ -118,7 +168,7 @@ const page = () => {
         {/* Submit Button */}
         <button
           type="submit"
-          className="bg-black text-white py-3 px-8 rounded font-medium  transition-colors w-full md:w-auto md:self-start"
+          className="bg-black text-white py-3 px-8 rounded font-medium cursor-pointer  transition-colors w-full md:w-auto md:self-start"
         >
           Add Product
         </button>
