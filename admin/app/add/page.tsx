@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { toast, Bounce } from "react-toastify"; // Import toast here!
+import { toast, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 const page = () => {
   const url = "http://localhost:4000";
@@ -53,18 +53,18 @@ const page = () => {
         theme: "dark",
         transition: Bounce,
       });
-    }else {
-        toast.error(response.data.message, {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: false,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-            transition: Bounce,
-          });
+    } else {
+      toast.error(response.data.message, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        transition: Bounce,
+      });
     }
   };
 
