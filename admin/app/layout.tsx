@@ -5,8 +5,6 @@ import { Geist, Geist_Mono } from "next/font/google";
 import Navbar from "@/components/Navbar";
 import ToastProvider from "@/components/ToastProvider";
 
-
-
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -33,7 +31,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <div>
-        <ToastProvider />
+          <ToastProvider />
           <Navbar />
           <hr />
           <div className="app-content flex">
