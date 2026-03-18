@@ -3,6 +3,7 @@ import cors from 'cors'
 import { connectDB } from './config/db.js';
 import dotenv from 'dotenv';
 import foodRoute from './routes/foodRoute.js';
+import userRoute from './routes/userRoute.js';
 
 const app = express();
 const PORT = 4000;
@@ -16,7 +17,7 @@ await connectDB();
 
 app.use('/api/food', foodRoute);
 app.use('/images', express.static('uploads'));
-
+app.use('/api/user', userRoute);
 
 app.get("/", (req,res)=> {
     res.send('Hello World!');
