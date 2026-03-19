@@ -29,6 +29,9 @@ export type StoreContextType = {
   addToCart: (foodId: string) => void;
   removeFromCart: (foodId: string) => void;
   getTotalCartAmount: () => number;
+  url: string;
+  token: string;
+  setToken: React.Dispatch<React.SetStateAction<string>>;
 };
 
 export type LoginPopupProps = {
