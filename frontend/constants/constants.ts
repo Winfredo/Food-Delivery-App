@@ -326,4 +326,3 @@ export const foodList: FoodType[] = [
     category: "Noodles",
   },
 ];
-
