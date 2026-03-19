@@ -3,7 +3,7 @@ import React, { useContext } from "react";
 import { storeContext } from "@/context/StoreContextProvider";
 import { useRouter } from "next/navigation";
 const page = () => {
-  const { cartItems, foodList, removeFromCart,getTotalCartAmount } =
+  const { cartItems, foodList, removeFromCart,getTotalCartAmount,url } =
     useContext(storeContext)!;
     const router = useRouter();
 
@@ -30,7 +30,7 @@ const page = () => {
                 <div  
                   className=" my-2.5 mx-0 text-black grid grid-cols-[1fr_1.5fr_1fr_1fr_1fr_0.5fr] items-center text-[max(1vw,12px)]"
                 >
-                  <img src={item.image} className="md:w-12.5 w-10" />
+                  <img src={`${url}/images/${item.image}`} className="md:w-12.5 w-10" />
                   <p>{item.name}</p>
                   <p>${item.price}</p>
                   <p>{cartItems[item._id]}</p>
