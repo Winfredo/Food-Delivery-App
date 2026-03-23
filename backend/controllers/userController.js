@@ -12,7 +12,7 @@ export const loginUser = async (req, res, next) => {
         const { email, password } = req.body;
         const user = await UserService.loginUser({ email, password });
         if (!user) {
-            res.status(401).json({ success: false, message: "Invalid email or password" });``
+            res.status(401).json({ success: false, message: "Invalid email or password" });
         }
         const token = generateToken(user._id);
         console.log("Generated Token:", token);
