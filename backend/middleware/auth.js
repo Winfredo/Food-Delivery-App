@@ -7,12 +7,12 @@ const authMiddleware = async (req, res, next) => {
         return res.status(401).json({success:false, message: 'Unauthorized.Login in again'});
     }
     try {
-      const token_decode = jwt.verify(token, process.env.JWT_SECRET);  
+      const token_decode = jwt.verify(token, process.env.JWT_SECRET);
         req.body = req.body || {};
         req.body.userId = token_decode.id;
         next();
-    }catch (error) {
-        console.error("Error in authMiddleware:", error); 
+    } catch (error) {
+        console.error("Error in authMiddleware:", error);
         next(error);
     }
 }
