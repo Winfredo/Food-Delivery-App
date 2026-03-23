@@ -3,7 +3,7 @@ import userModel from "../models/userModel.js";
 class CartService {
   static async addToCart(req, res) {
     const userId = req.body.userId;
-    const foodId = req.body.itemId;
+    const foodId = req.body.foodId;
 
     if (!userId) {
       return null;
@@ -33,7 +33,7 @@ class CartService {
 
   static async removeFromCart(req, res) {
     const userId = req.body.userId;
-    const foodId = req.body.itemId;
+    const foodId = req.body.foodId;
 
     if (!userId) {
       return null;
