@@ -13,11 +13,17 @@ const StoreContextProvider = (props: any) => {
   const url = "http://localhost:4000";
   
 
-  const addToCart = (foodId: string) => {
+  const addToCart = async (foodId: string) => {
     if (!cartItems[foodId]) {
       setCartItems((prev) => ({ ...prev, [foodId]: 1 }));
     } else {
       setCartItems((prev) => ({ ...prev, [foodId]: prev[foodId] + 1 }));
+    }
+
+    if (token) {
+      await axios.post(url + "/api/cart/add", {itemId: foodId }, {
+        headers: {token}
+      }); 
     }
   };
 
