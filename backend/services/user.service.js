@@ -22,6 +22,9 @@ class UserService {
       return null;
     }
     const user = await userModel.findOne({ email });
+    if (!user) {
+      return null;
+    }
     const isPasswordValid = await comparePassword(password, user.password);
 
     if (!isPasswordValid) {
