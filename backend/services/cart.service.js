@@ -5,12 +5,13 @@ class CartService {
     const userId = req.body.userId;
     const foodId = req.body.itemId;
 
+    if (!userId) {
+      return null;
+    }
+
     const userData = await userModel.findById(userId);
     if (!userData) {
-      return res.status(404).json({
-        success: false,
-        message: "User not found",
-      });
+      return null;
     }
 
     let cartObject = userData.cartObject || {};
@@ -34,14 +35,16 @@ class CartService {
     const userId = req.body.userId;
     const foodId = req.body.itemId;
 
+    if (!userId) {
+      return null;
+    }
+
     const userData = await userModel.findById(userId);
 
     if (!userData) {
-      return res.status(404).json({
-        success: false,
-        message: "User not found",
-      });
+      return null;
     }
+
     let cartObject = userData.cartObject || {};
 
     if (cartObject[foodId] > 0) {
@@ -62,17 +65,19 @@ class CartService {
 
   static async getCart(req, res) {
     const userId = req.body.userId;
-    const userData = await userModel.findById(userId);
-    const cartData = await userData.cartObject;
-    res.json({ success: true, cartData });
-    if (!userData) {
-      return res.status(404).json({
-        success: false,
-        message: "User not found",
-      });
+
+    if (!userId) {
+      return null;
     }
 
-    return userData;
+    const userData = await userModel.findById(userId);
+
+    if (!userData) {
+      return null;
+    }
+
+    const cartData = userData.cartObject || {};
+    return { userData, cartData };
   }
 }
 
