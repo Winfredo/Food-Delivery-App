@@ -21,7 +21,7 @@ const StoreContextProvider = (props: any) => {
     }
 
     if (token) {
-      await axios.post(url + "/api/cart/add", {itemId: foodId }, {
+      await axios.post(url + "/api/cart/add", {foodId }, {
         headers: {token}
       }); 
     }
