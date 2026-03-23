@@ -1,15 +1,41 @@
-import userModel from "../models/userModel.js";
+import CartService from "../services/cart.service.js";
 
-const addToCart = async (req,res) => {
+const addToCart = async (req, res, next) => {
+  try {
+    const user = await CartService.addToCart(req, res);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    res.json({ success: true, message: "Item added to cart" });
+  } catch (error) {
+    console.error("Error in addToCart:", error);
+    next(error);
+  }
+};
 
-}
+const removeFromCart = async (req, res, next) => {
+  try {
+    const user = await CartService.removeFromCart(req, res);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    res.json({ success: true, message: "Item removed from cart" });
+  } catch (error) {
+    console.error("Error in removeFromCart:", error);
+    next(error);
+  }
+};
 
-const removeFromCart = async (req,res) => {
+const getCart = async (req, res, next) => {
+  try {
+    const user = await CartService.getCart(req, res);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+  } catch (error) {
+    console.error("Error in getCart:", error);
+    next(error);
+  }
+};
 
-}
-
-const getCart = async (req,res) => {
-
-}
-
-export {addToCart, removeFromCart, getCart}
+export { addToCart, removeFromCart, getCart };
