@@ -28,10 +28,11 @@ const removeFromCart = async (req, res, next) => {
 
 const getCart = async (req, res, next) => {
   try {
-    const user = await CartService.getCart(req, res);
-    if (!user) {
+    const result = await CartService.getCart(req, res);
+    if (!result || !result.userData) {
       return res.status(404).json({ message: "User not found" });
     }
+    res.json({ success: true, cartData: result.cartData });
   } catch (error) {
     console.error("Error in getCart:", error);
     next(error);
