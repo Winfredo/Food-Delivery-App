@@ -21,8 +21,8 @@ const StoreContextProvider = (props: any) => {
     }
 
     if (token) {
-      await axios.post(url + "/api/cart/add", {foodId }, {
-        headers: {token}
+      await axios.post(url + "/api/cart/add", { itemId: foodId }, {
+        headers: { token }
       }); 
     }
   }; 
@@ -38,9 +38,10 @@ const StoreContextProvider = (props: any) => {
     });
 
    if (token) {
-      await axios.post(url + "/api/cart/remove", {foodId }, {
-        headers: {token}
-      }); 
+      await axios.delete(url + "/api/cart/remove", {
+        data: { itemId: foodId },
+        headers: { token }
+      });
     }
   };
 
@@ -60,12 +61,27 @@ const StoreContextProvider = (props: any) => {
       setFoodList(response.data.data);
   }
 
+  const loadCartData = async (token: string) => {
+    if (!token) return;
+
+    try {
+      const response = await axios.get(url + "/api/cart/list", {
+        headers: { token },
+      });
+
+      setCartItems(response.data.cartData || {});
+    } catch (error) {
+      console.error("loadCartData failed:", error);
+    }
+  };
+
   useEffect(() => {
     async function fetchData() {
       await fetchFoodList();
       const storedToken = localStorage.getItem("token");
       if (storedToken) {
         setToken(storedToken);
+        await loadCartData(storedToken);
       }
     }
     fetchData();
