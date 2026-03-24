@@ -34,7 +34,7 @@ const Navbar = ({ setShowLoginPopup }: LoginPopupProps) => {
         </div>
 
         <ul className="hidden md:flex items-center gap-4 lg:gap-5">
-          <Link href="#hero">
+          <Link href="/">
             <li
               className={`pb-2 cursor-pointer transition duration-300 border-b-2 ${activeItem === "home" ? "border-[#FF6347]" : "border-transparent hover:border-[#FF6347]"}`}
               onClick={() => setActiveItem("home")}
