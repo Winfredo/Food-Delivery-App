@@ -82,14 +82,16 @@ const LoginPopup = ({ setShowLoginPopup }: LoginPopupProps) => {
     />
   </div>
   
-  <button type="submit" className="w-full mt-4 bg-[#FF6347] hover:bg-[#e5533d] text-white py-2 rounded transition-colors text-sm font-medium">
+  <button type="submit" className="w-full mt-4 cursor-pointer bg-[#FF6347] hover:bg-[#e5533d] text-white py-2 rounded transition-colors text-sm font-medium">
     {currentState === "Sign Up" ? "Create Account" : "Login"}
   </button>
   
-  <div className="flex items-start gap-2 mt-3">
-    <input type="checkbox" required className="mt-1 w-3.5 h-3.5 accent-[#FF6347]" />
-    <p className="text-xs text-gray-600">By accepting, you agree to our terms and conditions</p>
-  </div>
+  {currentState === "Sign Up" && (
+    <div className="flex items-start gap-2 mt-3">
+      <input type="checkbox" required className="mt-1 w-3.5 h-3.5 accent-[#FF6347]" />
+      <p className="text-xs text-gray-600">By accepting, you agree to our terms and conditions</p>
+    </div>
+  )}
   
   {currentState === "Login" ? (
     <p className="mt-4 text-xs text-center text-gray-600">
