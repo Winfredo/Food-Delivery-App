@@ -38,8 +38,7 @@ const StoreContextProvider = (props: any) => {
     });
 
    if (token) {
-      await axios.delete(url + "/api/cart/remove", {
-        data: { itemId: foodId },
+      await axios.post(url + "/api/cart/remove", { itemId: foodId }, {
         headers: { token }
       });
     }
@@ -53,7 +52,7 @@ const StoreContextProvider = (props: any) => {
         totalAmount += item.price * cartItems[foodId];
       }
     }
-    return totalAmount;
+    return Math.round(totalAmount * 100) / 100;
   }
 
   const fetchFoodList = async () => {
