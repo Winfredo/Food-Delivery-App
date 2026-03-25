@@ -1,7 +1,10 @@
 import express from 'express';
 import cors from 'cors'
-import { connectDB } from './config/db.js';
 import dotenv from 'dotenv';
+
+dotenv.config({quiet: true});
+
+import { connectDB } from './config/db.js';
 import foodRoute from './routes/foodRoute.js';
 import userRoute from './routes/userRoute.js';
 import cartRoute from './routes/cartRoute.js';
@@ -11,7 +14,6 @@ const app = express();
 const PORT = 4000;
 
 app.use(cors());
-dotenv.config({quiet: true});
 app.use(express.json());
 
 //db connection
