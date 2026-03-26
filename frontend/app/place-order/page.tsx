@@ -58,10 +58,10 @@ const handleSubmitOrder = async (e: React.FormEvent<HTMLFormElement>) => {
   try {
     let response = await axios.post(url + "/api/order/place", orderData, {headers: { token }}); 
     if (response.data.success) {
-      const {sessionId} = response.data;
-      window.location.href = `https://checkout.stripe.com/pay/${sessionId}`;
+        const { checkoutUrl } = response.data;  
+        window.location.href = checkoutUrl; 
     } else {
-      alert("Failed to place order. Please try again.");
+        alert("Failed to place order. Please try again.");
     }
   } catch (error) {
     console.error("Order placement error:", error);
