@@ -63,7 +63,7 @@ class OrderService {
         success: true,
         message: "Order placed successfully",
         orderId: savedOrder._id,
-        checkoutUrl: session.url, 
+        checkoutUrl: session.url,
         sessionId: session.id,
         clientSecret: session.payment_intent,
       };
