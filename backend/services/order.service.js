@@ -13,6 +13,8 @@ function getStripe() {
 
 class OrderService {
   static async placeOrder(req, res, next) {
+    const frontend_url = "http://localhost:3000";
+
     try {
       // Create and save the order
       const newOrder = new orderModel({
@@ -54,8 +56,8 @@ class OrderService {
         payment_method_types: ["card"],
         line_items: lineItems,
         mode: "payment",
-        success_url: `${req.body.successUrl}?session_id={CHECKOUT_SESSION_ID}`,
-        cancel_url: req.body.cancelUrl,
+        success_url: `${frontend_url}/verify?success=true&orderId=${savedOrder._id}`, 
+        cancel_url: `${frontend_url}/verify?success=false&orderId=${savedOrder._id}`,
         customer_email: req.body.email,
       });
 

@@ -51,7 +51,7 @@ const handleSubmitOrder = async (e: React.FormEvent<HTMLFormElement>) => {
     totalAmount: Math.round((getTotalCartAmount() + deliveryFee) * 100) / 100,
     deliveryFee: deliveryFee,
     email: data.email,
-    successUrl: `${url}/verify`,
+    successUrl: `${url}`,
     cancelUrl: `${url}`
   }
 
