@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { LoginPopupProps } from "@/types/type";
@@ -10,7 +10,19 @@ const Navbar = ({ setShowLoginPopup }: LoginPopupProps) => {
   const [activeItem, setActiveItem] = useState("home");
   const { getTotalCartAmount, token, setToken } = useContext(storeContext)!;
   const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const profileRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (profileRef.current && !profileRef.current.contains(event.target as Node)) {
+        setIsProfileOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
   const logOut = () => {
     console.log("Logging out...");
     setToken("");
@@ -97,14 +109,14 @@ const Navbar = ({ setShowLoginPopup }: LoginPopupProps) => {
               sign in
             </button>
           ) : (
-           <div className="relative">
+           <div className="relative" ref={profileRef}>
   <div className="cursor-pointer">
     <Image
       src="/assets/profile_icon.png"
       alt="Profile"
       width={24}
       height={24}
-      onClick={() => setIsProfileOpen(!isProfileOpen)}
+      onClick={() => setIsProfileOpen((open) => !open)}
       className={`w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 rounded-full border-2 transition-all duration-300 ${
         isProfileOpen ? 'border-orange-500' : 'border-transparent'
       }`}
