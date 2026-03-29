@@ -12,21 +12,26 @@ const LoginPopup = ({ setShowLoginPopup }: LoginPopupProps) => {
     name: "",
     email: "",
     password: "",
-  })
+  });
+  const [errorMessage, setErrorMessage] = useState("");
 
   const onLogin = async (e:any) => {
     e.preventDefault();
     let newUrl = url + (currentState === "Login" ? "/api/user/login" : "/api/user/signup");
-    
-    const response = await axios.post(newUrl, formData);
-    
-    if(response.data.success){
-      console.log(response.data);
-      setToken(response.data.token);
-      localStorage.setItem("token", response.data.token);
-      setShowLoginPopup(false);
-    }else {
-      alert(response.data.message);
+
+    try {
+      const response = await axios.post(newUrl, formData);
+      if (response.data.success) {
+        setToken(response.data.token);
+        localStorage.setItem("token", response.data.token);
+        setShowLoginPopup(false);
+        setErrorMessage("");
+      } else {
+        setErrorMessage(response.data.message || "Login failed");
+      }
+    } catch (error: any) {
+      const msg = error?.response?.data?.message || "Login failed. Please check your credentials.";
+      setErrorMessage(msg);
     }
   }
 
@@ -93,12 +98,19 @@ const LoginPopup = ({ setShowLoginPopup }: LoginPopupProps) => {
     </div>
   )}
   
+  {errorMessage && (
+    <p className="mt-3 text-sm text-red-600 text-center">{errorMessage}</p>
+  )}
+
   {currentState === "Login" ? (
     <p className="mt-4 text-xs text-center text-gray-600">
       Create a new account?
       <span
         className="text-[#FF6347] cursor-pointer hover:underline ml-1"
-        onClick={() => setCurrentState("Sign Up")}
+        onClick={() => {
+          setCurrentState("Sign Up");
+          setErrorMessage("");
+        }}
       >
         Click here
       </span>
@@ -108,7 +120,10 @@ const LoginPopup = ({ setShowLoginPopup }: LoginPopupProps) => {
       Already have an account?
       <span
         className="text-[#FF6347] cursor-pointer hover:underline ml-1"
-        onClick={() => setCurrentState("Login")}
+        onClick={() => {
+          setCurrentState("Login");
+          setErrorMessage("");
+        }}
       >
         Login here
       </span>
