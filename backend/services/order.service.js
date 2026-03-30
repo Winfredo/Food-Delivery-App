@@ -51,12 +51,11 @@ class OrderService {
       });
 
       const stripeInstance = getStripe();
-
       const session = await stripeInstance.checkout.sessions.create({
         payment_method_types: ["card"],
         line_items: lineItems,
         mode: "payment",
-        success_url: `${frontend_url}/verify?success=true&orderId=${savedOrder._id}`, 
+        success_url: `${frontend_url}/verify?success=true&orderId=${savedOrder._id}`,
         cancel_url: `${frontend_url}/verify?success=false&orderId=${savedOrder._id}`,
         customer_email: req.body.email,
       });
