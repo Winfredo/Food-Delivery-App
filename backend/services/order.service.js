@@ -73,6 +73,18 @@ class OrderService {
       throw error;
     }
   }
+
+  static async verifyOrder(req, res) {
+    const { success, orderId } = req.body;
+    
+      if (success === "true") {
+        await orderModel.findByIdAndUpdate(orderId, { status: "Payment Successful" });
+        return res.status(200).json({ message: "Order verified successfully", success: true });
+      } else {
+        await orderModel.findByIdAndUpdate(orderId, { status: "Payment Failed" });
+        return res.status(200).json({ message: "Order verification failed", success: false });
+      }
+    }
 }
 
 export default OrderService;
