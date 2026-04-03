@@ -13,4 +13,22 @@ const placeOrder = async (req, res, next) => {
     }
 }
 
-export { placeOrder };
+const verifyOrder = async (req,res,next) => {
+    const {success, orderId} = req.body;
+
+    try {
+        if (success === "true") {
+            await orderService.verifyOrder(req, res);
+            return res.status(200).json({ message: "Order verified successfully", success: true });
+        } else {
+            await orderService.verifyOrder(req, res);
+            return res.status(200).json({ message: "Order verification failed", success: false });
+        }
+
+    }catch (error) {
+        console.log("Error in verifyOrder:", error);
+        next(error);
+    }
+}
+
+export { placeOrder, verifyOrder };
