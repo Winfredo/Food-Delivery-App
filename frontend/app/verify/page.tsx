@@ -1,29 +1,42 @@
 "use client";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { storeContext } from "@/context/StoreContextProvider";
+import axios from "axios"; 
+
 
 export default function VerifyPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  useEffect(() => {
-    const success = searchParams.get("success");
-    const orderId = searchParams.get("orderId");
-
-    if (success === "true") {
-      // Payment successful, redirect to home after a short delay
-      setTimeout(() => {
-        router.push("/");
-      }, 2000);
-    } else {
-      // Payment failed, redirect to cart
-      setTimeout(() => {
-        router.push("/cart");
-      }, 2000);
-    }
-  }, [searchParams, router]);
-
   const success = searchParams.get("success");
+  const orderId = searchParams.get("orderId");
+const navigate = useRouter();
+  const {url} = useContext(storeContext)!; 
+
+  const verifyPayment = async () => {
+    const response = await axios.post(`${url}/api/order/verify`, { success, orderId });
+    console.log("Payment verification response:", response.data);
+
+    if (response.data.success) {
+      // Payment verified successfully, redirect to home
+      navigate.push("/cart");
+    } else {
+      // Payment verification failed, redirect to cart
+      navigate.push("/");
+    }
+  }
+  // if (success === "true") {
+  //   // Payment successful, redirect to home after a short delay
+  //   setTimeout(() => {
+  //     router.push("/");
+  //   }, 2000);
+  // } else {
+  //   // Payment failed, redirect to cart
+  //   setTimeout(() => {
+  //     router.push("/cart");
+  //   }, 2000);
+  // }
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-50">
