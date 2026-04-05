@@ -1,34 +1,60 @@
 import orderService from "../services/order.service.js";
 
 const placeOrder = async (req, res, next) => {
-    try {
-        const order = await orderService.placeOrder(req, res);
-        if (!order) {
-            return res.status(400).json({ message: "Failed to place order", success: false });
-        }
-        res.status(201).json(order);
-    } catch (error) {
-        console.error("Error in placeOrder:", error);
-        next(error);
+  try {
+    const order = await orderService.placeOrder(req, res);
+    if (!order) {
+      return res
+        .status(400)
+        .json({ message: "Failed to place order", success: false });
     }
-}
+    res.status(201).json(order);
+  } catch (error) {
+    console.error("Error in placeOrder:", error);
+    next(error);
+  }
+};
 
-const verifyOrder = async (req,res,next) => {
-    const {success, orderId} = req.body;
+// orderController.js
+const verifyOrder = async (req, res, next) => {
+  const { success, orderId } = req.body;
+  if (!success || !orderId) {
+    return res.status(400).json({
+      message: "Missing required fields: success and orderId",
+      success: false,
+    });
+  }
 
-    try {
-        if (success === "true") {
-            await orderService.verifyOrder(req, res);
-            return res.status(200).json({ message: "Order verified successfully", success: true });
-        } else {
-            await orderService.deleteOrder(orderId);
-            return res.status(200).json({ message: "Order cancelled due to payment failure", success: false });
-        }
+  try {
+    const result = await orderService.verifyOrder(success, orderId);
+    
+    return res.status(200).json({
+      message: result.message,
+      success: result.success
+    });
+  } catch (error) {
+    console.log("Error in verifyOrder:", error);
+    next(error);
+  }
+};
 
-    }catch (error) {
-        console.log("Error in verifyOrder:", error);
-        next(error);
+const userOrder = async (req, res, next) => {
+  try {
+    const userId = req.body.userId;
+    
+    if (!userId) {
+      return res.status(400).json({
+        message: "User not authenticated",
+        success: false,
+      });
     }
-}
 
-export { placeOrder, verifyOrder };
+    const orders = await orderService.userOrder(userId);
+    return res.status(200).json({ success: true, data: orders });
+  } catch (error) {
+    console.error("Error in userOrder:", error);
+    next(error);
+  }
+};
+
+export { placeOrder, verifyOrder, userOrder };
