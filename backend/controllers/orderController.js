@@ -21,8 +21,8 @@ const verifyOrder = async (req,res,next) => {
             await orderService.verifyOrder(req, res);
             return res.status(200).json({ message: "Order verified successfully", success: true });
         } else {
-            await orderService.verifyOrder(req, res);
-            return res.status(200).json({ message: "Order verification failed", success: false });
+            await orderService.deleteOrder(orderId);
+            return res.status(200).json({ message: "Order cancelled due to payment failure", success: false });
         }
 
     }catch (error) {
