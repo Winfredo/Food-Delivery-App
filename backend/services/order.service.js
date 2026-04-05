@@ -74,17 +74,21 @@ class OrderService {
     }
   }
 
-  static async verifyOrder(req, res) {
-    const { success, orderId } = req.body;
-
-      if (success === "true") {
-        await orderModel.findByIdAndUpdate(orderId, {payment:true},{ status: "Payment Successful" });
-        return res.status(200).json({ message: "Order verified successfully", success: true });
-      } else {
-        await orderModel.findByIdAndUpdate(orderId,{payment:false} ,{ status: "Payment Failed" });
-        return res.status(200).json({ message: "Order verification failed", success: false });
-      }
-    }
+static async verifyOrder(success, orderId) {
+  if (success === "true") {
+    await orderModel.findByIdAndUpdate(
+      orderId, 
+      { payment: true, status: "Payment Successful" }
+    );
+    return { success: true, message: "Order verified successfully" };
+  } else {
+    await orderModel.findByIdAndUpdate(
+      orderId, 
+      { payment: false, status: "Payment Failed" }
+    );
+    return { success: false, message: "Order verification failed" };
+  }
+}
 
   static async deleteOrder(orderId) {
     try {
@@ -94,6 +98,15 @@ class OrderService {
       throw new Error(`Failed to delete order: ${error.message}`);t
     }
   }
+
+static async userOrder(userId) {
+  try {
+    const orders = await orderModel.find({ userId: userId }).sort({ createdAt: -1 });
+    return orders;
+  } catch (error) {
+    throw new Error(`Failed to fetch user orders: ${error.message}`);
+  }
+}
 }
 
 export default OrderService;
