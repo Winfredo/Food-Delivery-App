@@ -85,6 +85,15 @@ class OrderService {
         return res.status(200).json({ message: "Order verification failed", success: false });
       }
     }
+
+  static async deleteOrder(orderId) {
+    try {
+      const deletedOrder = await orderModel.findByIdAndDelete(orderId);
+      return deletedOrder;
+    } catch (error) {
+      throw new Error(`Failed to delete order: ${error.message}`);t
+    }
+  }
 }
 
 export default OrderService;
