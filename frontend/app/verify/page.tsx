@@ -18,13 +18,11 @@ export default function VerifyPage() {
     });
     console.log("Payment verification response:", response.data);
 
-    setTimeout(() => {
-      if (success === "true") {
-        router.push("/");
-      } else {
-        router.push("/cart");
-      }
-    }, 2000);
+    if (success === "true") {
+      router.push("/cart");
+    } else {
+      router.push("/");
+    }
   };
 
   useEffect(() => {
