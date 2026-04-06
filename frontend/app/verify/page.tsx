@@ -19,7 +19,7 @@ export default function VerifyPage() {
     console.log("Payment verification response:", response.data);
 
     if (success === "true") {
-      router.push("/cart");
+      router.push("/my-orders");
     } else {
       router.push("/");
     }
