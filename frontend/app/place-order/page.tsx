@@ -1,11 +1,13 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useContext } from "react";
 import { storeContext } from "@/context/StoreContextProvider";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 const page = () => {
   const { getTotalCartAmount, token, cartItems, foodList, url } =
     useContext(storeContext)!;
+    const router = useRouter();
 
   const [data, setData] = useState({
     firstName: "",
@@ -72,6 +74,13 @@ const page = () => {
     }
   };
 
+  useEffect(() => {
+   if (!token){
+    router.push("/cart");
+   }else if (getTotalCartAmount() === 0) {
+    router.push("/cart");
+   }
+  }, [token]);
   return (
     <form
       className="place-order flex items-start justify-between gap-12 mt-25"
