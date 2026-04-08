@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { LoginPopupProps } from "@/types/type";
 import { storeContext } from "@/context/StoreContextProvider";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 
 const Navbar = ({ setShowLoginPopup }: LoginPopupProps) => {
   const [activeItem, setActiveItem] = useState("home");
@@ -12,6 +12,15 @@ const Navbar = ({ setShowLoginPopup }: LoginPopupProps) => {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const profileRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
+  const pathname = usePathname();
+
+  useEffect(() => {
+    if (pathname === "/") {
+      setActiveItem("home");
+    } else {
+      setActiveItem("");
+    }
+  }, [pathname]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -33,7 +42,6 @@ const Navbar = ({ setShowLoginPopup }: LoginPopupProps) => {
     router.push("/");
   };
   return (
-    //adjust the height after finalizing the design.
     <div className="w-full h-20 px-4 fixed top-0 left-0 z-50 sm:px-6 bg-white shadow-md">
       <div className="flex h-full items-center justify-between max-w-7xl mx-auto">
         <div className="w-30 sm:w-37.5 md:w-50">
@@ -58,7 +66,7 @@ const Navbar = ({ setShowLoginPopup }: LoginPopupProps) => {
             </li>
           </Link>
 
-          <Link href="#explore">
+          <Link href="/#explore">
             <li
               className={`pb-2 cursor-pointer transition duration-300 border-b-2 ${activeItem === "menu" ? "border-[#FF6347]" : "border-transparent hover:border-[#FF6347]"}`}
               onClick={() => setActiveItem("menu")}
@@ -66,7 +74,7 @@ const Navbar = ({ setShowLoginPopup }: LoginPopupProps) => {
               menu
             </li>
           </Link>
-          <Link href="#footer">
+          <Link href="/#footer">
             <li
               className={`pb-2 cursor-pointer transition duration-300 border-b-2 ${activeItem === "contact" ? "border-[#FF6347]" : "border-transparent hover:border-[#FF6347]"}`}
               onClick={() => setActiveItem("contact")}
@@ -136,7 +144,13 @@ const Navbar = ({ setShowLoginPopup }: LoginPopupProps) => {
                   <div className="absolute -top-2 right-4 w-4 h-4 bg-white border-l border-t border-gray-200 transform rotate-45"></div>
 
                   <ul className="bg-white rounded-xl shadow-2xl py-3 border border-gray-100 overflow-hidden">
-                    <li className="px-5 py-3 hover:bg-orange-50 cursor-pointer transition-colors duration-200 flex items-center gap-3 text-gray-700 hover:text-orange-600">
+                    <li
+                      onClick={() => {
+                        router.push("/my-orders");
+                        setIsProfileOpen(false);
+                      }}
+                      className="px-5 py-3 hover:bg-orange-50 cursor-pointer transition-colors duration-200 flex items-center gap-3 text-gray-700 hover:text-orange-600"
+                    >
                       <img
                         src="/assets/basket_icon.png"
                         alt="orders"
@@ -148,7 +162,10 @@ const Navbar = ({ setShowLoginPopup }: LoginPopupProps) => {
                     <li className="border-t border-gray-100 my-1"></li>
 
                     <li
-                      onClick={logOut}
+                      onClick={() => {
+                        logOut();
+                        setIsProfileOpen(false);
+                      }}
                       className="px-5 py-3 hover:bg-red-50 cursor-pointer transition-colors duration-200 flex items-center gap-3 text-gray-700 hover:text-red-600"
                     >
                       <img
