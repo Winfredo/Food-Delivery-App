@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { toast, Bounce } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 const page = () => {
   const url = "http://localhost:4000";
   const [image, setImage] = useState<File | null>(null);
