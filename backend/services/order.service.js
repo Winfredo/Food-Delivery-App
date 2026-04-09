@@ -107,6 +107,15 @@ static async userOrder(userId) {
     throw new Error(`Failed to fetch user orders: ${error.message}`);
   }
 }
+
+static async listOrders() {
+  try {
+    const orders = await orderModel.find().sort({ createdAt: -1 });
+    return orders;
+  } catch (error) {
+    throw new Error(`Failed to fetch orders: ${error.message}`);
+  }
+}
 }
 
 export default OrderService;
