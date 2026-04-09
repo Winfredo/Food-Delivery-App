@@ -57,4 +57,14 @@ const userOrder = async (req, res, next) => {
   }
 };
 
-export { placeOrder, verifyOrder, userOrder };
+const listOrders = async (req, res, next) => {
+  try {
+    const orders = await orderService.listOrders();
+    return res.status(200).json({ success: true, data: orders });
+  } catch (error) {
+    console.error("Error in listOrders:", error);
+    next(error);
+  }
+};
+
+export { placeOrder, verifyOrder, userOrder,listOrders };
