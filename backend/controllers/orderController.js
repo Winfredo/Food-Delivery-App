@@ -50,7 +50,7 @@ const userOrder = async (req, res, next) => {
     }
 
     const orders = await orderService.userOrder(userId);
-    return res.status(200).json({ success: true, data: orders });
+    return res.status(200).json({ success: true, data: orders, message: "User orders fetched successfully" });
   } catch (error) {
     console.error("Error in userOrder:", error);
     next(error);
@@ -60,11 +60,32 @@ const userOrder = async (req, res, next) => {
 const listOrders = async (req, res, next) => {
   try {
     const orders = await orderService.listOrders();
-    return res.status(200).json({ success: true, data: orders });
+    return res.status(200).json({ success: true, data: orders, message: "Orders fetched successfully" });
   } catch (error) {
     console.error("Error in listOrders:", error);
     next(error);
   }
 };
 
-export { placeOrder, verifyOrder, userOrder,listOrders };
+const statusUpdate = async (req, res, next) => {
+  try {
+    const { orderId, status } = req.body;
+    if (!orderId || !status) {
+      return res.status(400).json({
+        message: "Missing required fields: orderId and status",
+        success: false,
+      });
+    }
+
+    const result = await orderService.statusUpdate(orderId, status);
+    return res.status(200).json({
+      message: result.message,
+      success: result.success
+    });
+  } catch (error) {
+    console.error("Error in statusUpdate:", error);
+    next(error);
+  }
+}
+
+export { placeOrder, verifyOrder, userOrder,listOrders,statusUpdate };
