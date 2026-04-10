@@ -12,31 +12,17 @@ const page = () => {
     if (response.data.success) {
       setOrders(response.data.data);
       console.log("Fetched orders:", response.data.data);
-      toast.success(response.data.message, {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-        transition: Bounce,
-      });
-    } else {
-      toast.error(response.data.message, {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-        transition: Bounce,
-      });
-    }
+    } 
   };
+
+  const statusHandler = async (orderId:any, status:any) => {
+    const response = await axios.post(`${url}/api/order/status`,{orderId, status});
+    if (response.data.success) {
+      fetchOrders();
+    } else {
+      console.error("Failed to update order status:", response.data.message);
+    }
+  }
 
   useEffect(() => {
     fetchOrders();
@@ -105,6 +91,7 @@ const page = () => {
                           Order #{index + 1}
                         </h3>
                         <select
+                          onChange={(e) => statusHandler(order._id, e.target.value)}
                           defaultValue={order.status}
                           className="rounded-md border border-gray-300 bg-white px-2 py-1 text-xs text-gray-800"
                         >
@@ -224,6 +211,7 @@ const page = () => {
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <select
+                          onChange={(e) => statusHandler(order._id, e.target.value)}
                           defaultValue={order.status}
                           className="rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900"
                         >
