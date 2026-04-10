@@ -70,52 +70,83 @@ class OrderService {
       };
     } catch (error) {
       console.error("Error in placeOrder:", error);
-      throw error;
+      res.json({ success: false, message: "Failed to place order" });
     }
   }
 
-static async verifyOrder(success, orderId) {
-  if (success === "true") {
-    await orderModel.findByIdAndUpdate(
-      orderId, 
-      { payment: true, status: "Payment Successful" }
-    );
-    return { success: true, message: "Order verified successfully" };
-  } else {
-    await orderModel.findByIdAndUpdate(
-      orderId, 
-      { payment: false, status: "Payment Failed" }
-    );
-    return { success: false, message: "Order verification failed" };
+  static async verifyOrder(success, orderId) {
+    if (success === "true") {
+      await orderModel.findByIdAndUpdate(orderId, {
+        payment: true,
+        status: "Payment Successful",
+      });
+      return { success: true, message: "Order verified successfully" };
+    } else {
+      await orderModel.findByIdAndUpdate(orderId, {
+        payment: false,
+        status: "Payment Failed",
+      });
+      return { success: false, message: "Order verification failed" };
+    }
   }
-}
 
   static async deleteOrder(orderId) {
     try {
       const deletedOrder = await orderModel.findByIdAndDelete(orderId);
       return deletedOrder;
     } catch (error) {
-      throw new Error(`Failed to delete order: ${error.message}`);t
+      return { success: false, message: "Failed to delete order" };
     }
   }
 
-static async userOrder(userId) {
-  try {
-    const orders = await orderModel.find({ userId: userId }).sort({ createdAt: -1 });
-    return orders;
-  } catch (error) {
-    throw new Error(`Failed to fetch user orders: ${error.message}`);
+  static async userOrder(userId) {
+    try {
+      const orders = await orderModel
+        .find({ userId: userId })
+        .sort({ createdAt: -1 });
+      return orders;
+    } catch (error) {
+      return { success: false, message: "Failed to fetch user orders" };
+    }
   }
-}
 
-static async listOrders() {
-  try {
-    const orders = await orderModel.find().sort({ createdAt: -1 });
-    return orders;
-  } catch (error) {
-    throw new Error(`Failed to fetch orders: ${error.message}`);
+  static async listOrders() {
+    try {
+      const orders = await orderModel.find().sort({ createdAt: -1 });
+      return orders;
+    } catch (error) {
+      return {
+        success: false,
+        message: "Failed to fetch orders",
+      };
+    }
   }
-}
+
+  static async statusUpdate(orderId, newStatus) {
+    try {
+      const updatedOrder = await orderModel.findByIdAndUpdate(orderId, {
+        status: newStatus,
+      });
+
+      if (!updatedOrder) {
+        return {
+          success: false,
+          message: "Order not found",
+        };
+      }
+
+      return {
+        success: true,
+        message: "Order status updated successfully",
+      };
+    } catch (error) {
+      console.error("Error in statusUpdate:", error);
+      return {
+        success: false,
+        message: "Failed to update order status",
+      };
+    }
+  }
 }
 
 export default OrderService;
