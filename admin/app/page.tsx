@@ -1,6 +1,43 @@
-import React from "react";
+"use client";
+import React, { useEffect, useMemo, useState } from "react";
+import Link from "next/link";
+import axios from "axios";
 
 const page = () => {
+  const [orders, setOrders] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const url = "http://localhost:4000";
+
+  const fetchOrders = async () => {
+    try {
+      const response = await axios.get(`${url}/api/order/list`);
+      if (response.data.success) {
+        setOrders(response.data.data || []);
+      } else {
+        setOrders([]);
+      }
+    } catch (error) {
+      console.error("Failed to fetch orders:", error);
+      setOrders([]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchOrders();
+  }, []);
+
+  const totalOrders = useMemo(() => orders.length, [orders]);
+  const totalRevenue = useMemo(
+    () => orders.reduce((sum, order) => sum + Number(order.totalAmount || 0), 0),
+    [orders],
+  );
+  const pendingPayments = useMemo(
+    () => orders.filter((order) => order.payment === false).length,
+    [orders],
+  );
+
   return (
     <div className="min-h-screen w-full bg-slate-50 px-4 py-6 md:px-8">
       <div className="mx-auto w-full max-w-7xl">
@@ -19,15 +56,15 @@ const page = () => {
           <div className="rounded-3xl border border-slate-200 bg-white px-5 py-4 shadow-sm">
             <p className="text-xs uppercase tracking-[0.25em] text-slate-400">Quick actions</p>
             <div className="mt-4 flex flex-wrap gap-2">
-              <button className="rounded-full bg-orange-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-orange-600">
+              <Link href="/add" className="rounded-full bg-orange-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-orange-600">
                 Add Product
-              </button>
-              <button className="rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-slate-300">
+              </Link>
+              <Link href="/orders" className="rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-slate-300">
                 View Orders
-              </button>
-              <button className="rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-slate-300">
-                View Customers
-              </button>
+              </Link>
+              <Link href="/orders" className="rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-slate-300">
+                See All Orders
+              </Link>
             </div>
           </div>
         </div>
@@ -35,13 +72,13 @@ const page = () => {
         <div className="grid gap-4 md:grid-cols-4">
           <div className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
             <p className="text-sm font-medium text-slate-500">Total Orders</p>
-            <p className="mt-4 text-3xl font-semibold text-slate-900">124</p>
-            <p className="mt-2 text-sm text-slate-500">Orders processed in the last 30 days</p>
+            <p className="mt-4 text-3xl font-semibold text-slate-900">{isLoading ? "..." : totalOrders}</p>
+            <p className="mt-2 text-sm text-slate-500">Total number of orders received</p>
           </div>
           <div className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
             <p className="text-sm font-medium text-slate-500">Revenue</p>
-            <p className="mt-4 text-3xl font-semibold text-slate-900">$18.2k</p>
-            <p className="mt-2 text-sm text-slate-500">Estimated revenue from recent orders</p>
+            <p className="mt-4 text-3xl font-semibold text-slate-900">${isLoading ? "..." : totalRevenue.toFixed(2)}</p>
+            <p className="mt-2 text-sm text-slate-500">Total order value collected so far</p>
           </div>
           <div className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
             <p className="text-sm font-medium text-slate-500">Active Customers</p>
@@ -50,8 +87,8 @@ const page = () => {
           </div>
           <div className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
             <p className="text-sm font-medium text-slate-500">Pending Payments</p>
-            <p className="mt-4 text-3xl font-semibold text-slate-900">7</p>
-            <p className="mt-2 text-sm text-slate-500">Orders awaiting payment confirmation</p>
+            <p className="mt-4 text-3xl font-semibold text-slate-900">{isLoading ? "..." : pendingPayments}</p>
+            <p className="mt-2 text-sm text-slate-500">Orders with payment not confirmed</p>
           </div>
         </div>
 
@@ -62,21 +99,23 @@ const page = () => {
                 <p className="text-sm font-medium text-slate-500">Order Summary</p>
                 <p className="mt-1 text-xl font-semibold text-slate-900">Latest orders at a glance</p>
               </div>
-              <button className="rounded-full bg-slate-900 px-4 py-2 text-sm font-semibold text-white transition hover:bg-slate-800">
+              <Link href="/orders" className="rounded-full  px-4 py-2 text-sm font-semibold text-white transition ">
                 See all orders
-              </button>
+              </Link>
             </div>
             <div className="space-y-4">
-              {[
-                { title: "Food Processing", details: "12 orders are currently being prepared." },
-                { title: "Payment Successful", details: "98 orders completed successfully." },
-                { title: "Payment Failed", details: "4 orders failed during checkout." },
-              ].map((item) => (
-                <div key={item.title} className="rounded-3xl border border-slate-100 bg-slate-50 p-4">
-                  <p className="text-sm font-semibold text-slate-900">{item.title}</p>
-                  <p className="mt-2 text-sm text-slate-600">{item.details}</p>
-                </div>
-              ))}
+              <div className="rounded-3xl border border-slate-100 bg-slate-50 p-4">
+                <p className="text-sm font-semibold text-slate-900">Food Processing</p>
+                <p className="mt-2 text-sm text-slate-600">{orders.filter((order) => order.status === "Food Processing").length} orders are currently being prepared.</p>
+              </div>
+              <div className="rounded-3xl border border-slate-100 bg-slate-50 p-4">
+                <p className="text-sm font-semibold text-slate-900">Payment Successful</p>
+                <p className="mt-2 text-sm text-slate-600">{orders.filter((order) => order.status === "Payment Successful").length} orders completed successfully.</p>
+              </div>
+              <div className="rounded-3xl border border-slate-100 bg-slate-50 p-4">
+                <p className="text-sm font-semibold text-slate-900">Payment Failed</p>
+                <p className="mt-2 text-sm text-slate-600">{orders.filter((order) => order.status === "Payment Failed").length} orders failed during checkout.</p>
+              </div>
             </div>
           </div>
 
