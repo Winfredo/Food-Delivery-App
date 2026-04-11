@@ -30,13 +30,20 @@ const page = () => {
   return (
     <div className="p-4 md:p-6 bg-gray-50 min-h-screen w-full">
       <div className="max-w-6xl mx-auto">
-        <div className="mb-6 md:mb-8">
-          <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2 text-center">
-            Order Management
-          </h1>
-          <p className="text-gray-600 text-center">
-            Monitor and manage all customer orders
-          </p>
+        <div className="mb-6 md:mb-8 flex items-center gap-4">
+          <a href="/" className="inline-flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-200 transition-colors">
+            <svg className="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M19 12H5m7-7l-7 7 7 7" />
+            </svg>
+          </a>
+          <div className="flex-1">
+            <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
+              Order Management
+            </h1>
+            <p className="text-gray-600">
+              Monitor and manage all customer orders
+            </p>
+          </div>
         </div>
 
         {orders.length === 0 ? (

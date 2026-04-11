@@ -73,6 +73,14 @@ const page = () => {
 
   return (
     <div className="w-[70%] ml-[max(5vw,25px)] mt-12 text-[#6d6d6d] text-base">
+      <div className="mb-6 flex items-center gap-4">
+        <a href="/" className="inline-flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-100 transition-colors">
+          <svg className="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M19 12H5m7-7l-7 7 7 7" />
+          </svg>
+        </a>
+        <h1 className="text-2xl font-bold text-gray-900">Add Product</h1>
+      </div>
       <form className="flex flex-col gap-5" onSubmit={onSubmitHandler}>
         {/* Upload Image */}
         <div className="flex flex-col gap-2">
