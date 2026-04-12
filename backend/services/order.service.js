@@ -23,6 +23,7 @@ class OrderService {
         totalAmount: req.body.totalAmount,
         address: req.body.address,
         status: "Food Processing",
+        deliveryFee: req.body.deliveryFee,
       });
       const savedOrder = await newOrder.save();
 
@@ -145,6 +146,58 @@ class OrderService {
         success: false,
         message: "Failed to update order status",
       };
+    }
+  }
+
+  static async retryPayment(orderId) {
+    const frontend_url = "http://localhost:3000";
+
+    try {
+      const order = await orderModel.findById(orderId);
+      if (!order) {
+        return { success: false, message: "Order not found" };
+      }
+
+      const lineItems = order.items.map((item) => ({
+        price_data: {
+          currency: "usd",
+          product_data: {
+            name: item.name,
+          },
+          unit_amount: Math.round(item.price * 100),
+        },
+        quantity: item.quantity || 1,
+      }));
+
+      const deliveryFee = order.deliveryFee || 2;
+      lineItems.push({
+        price_data: {
+          currency: "usd",
+          product_data: {
+            name: "Delivery Charge",
+          },
+          unit_amount: Math.round(deliveryFee * 100),
+        },
+        quantity: 1,
+      });
+
+      const stripeInstance = getStripe();
+      const session = await stripeInstance.checkout.sessions.create({
+        payment_method_types: ["card"],
+        line_items: lineItems,
+        mode: "payment",
+        success_url: `${frontend_url}/verify?success=true&orderId=${orderId}`,
+        cancel_url: `${frontend_url}/verify?success=false&orderId=${orderId}`,
+      });
+
+      return {
+        success: true,
+        message: "Payment retry initiated",
+        checkoutUrl: session.url,
+      };
+    } catch (error) {
+      console.error("Error in retryPayment:", error);
+      return { success: false, message: "Failed to retry payment" };
     }
   }
 }
