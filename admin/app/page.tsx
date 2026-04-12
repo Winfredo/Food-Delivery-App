@@ -12,6 +12,7 @@ const page = () => {
     try {
       const response = await axios.get(`${url}/api/order/list`);
       if (response.data.success) {
+        console.log("Fetched orders:", response.data.data);
         setOrders(response.data.data || []);
       } else {
         setOrders([]);
@@ -33,10 +34,17 @@ const page = () => {
     () => orders.reduce((sum, order) => sum + Number(order.totalAmount || 0), 0),
     [orders],
   );
+  const activeCustomers = useMemo(
+    () => new Set(orders.map((order) => order.userId)).size,
+    [orders],
+  );
   const pendingPayments = useMemo(
     () => orders.filter((order) => order.payment === false).length,
     [orders],
   );
+  const foodProcessingCount = useMemo(() => orders.filter(order => order.status === "Food Processing").length, [orders]);
+  const outForDeliveryCount = useMemo(() => orders.filter(order => order.status === "Out for Delivery").length, [orders]);
+  const deliveredCount = useMemo(() => orders.filter(order => order.status === "Delivered").length, [orders]);
 
   return (
     <div className="min-h-screen w-full bg-slate-50 px-4 py-6 md:px-8">
@@ -60,9 +68,6 @@ const page = () => {
                 Add Product
               </Link>
               <Link href="/orders" className="rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-slate-300">
-                View Orders
-              </Link>
-              <Link href="/orders" className="rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-slate-300">
                 See All Orders
               </Link>
             </div>
@@ -71,7 +76,7 @@ const page = () => {
 
         <div className="grid gap-4 md:grid-cols-4">
           <div className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
-            <p className="text-sm font-medium text-slate-500">Total Orders</p>
+            <p className="text-sm font-medium text-slate-500">Total {isLoading ? 'Orders' : (totalOrders === 1 ? 'Order' : 'Orders')}</p>
             <p className="mt-4 text-3xl font-semibold text-slate-900">{isLoading ? "..." : totalOrders}</p>
             <p className="mt-2 text-sm text-slate-500">Total number of orders received</p>
           </div>
@@ -82,7 +87,7 @@ const page = () => {
           </div>
           <div className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
             <p className="text-sm font-medium text-slate-500">Active Customers</p>
-            <p className="mt-4 text-3xl font-semibold text-slate-900">86</p>
+            <p className="mt-4 text-3xl font-semibold text-slate-900">{isLoading ? "..." : activeCustomers}</p>
             <p className="mt-2 text-sm text-slate-500">Customers who placed orders recently</p>
           </div>
           <div className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
@@ -106,15 +111,15 @@ const page = () => {
             <div className="space-y-4">
               <div className="rounded-3xl border border-slate-100 bg-slate-50 p-4">
                 <p className="text-sm font-semibold text-slate-900">Food Processing</p>
-                <p className="mt-2 text-sm text-slate-600">{orders.filter((order) => order.status === "Food Processing").length} orders are currently being prepared.</p>
+                <p className="mt-2 text-sm text-slate-600">{foodProcessingCount} order{foodProcessingCount === 1 ? '' : 's'} {foodProcessingCount === 1 ? 'is' : 'are'} currently being prepared.</p>
               </div>
               <div className="rounded-3xl border border-slate-100 bg-slate-50 p-4">
-                <p className="text-sm font-semibold text-slate-900">Payment Successful</p>
-                <p className="mt-2 text-sm text-slate-600">{orders.filter((order) => order.status === "Payment Successful").length} orders completed successfully.</p>
+                <p className="text-sm font-semibold text-slate-900">Out for Delivery</p>
+                <p className="mt-2 text-sm text-slate-600">{outForDeliveryCount} order{outForDeliveryCount === 1 ? '' : 's'} {outForDeliveryCount === 1 ? 'is' : 'are'} on {outForDeliveryCount === 1 ? 'its' : 'their'} way.</p>
               </div>
               <div className="rounded-3xl border border-slate-100 bg-slate-50 p-4">
-                <p className="text-sm font-semibold text-slate-900">Payment Failed</p>
-                <p className="mt-2 text-sm text-slate-600">{orders.filter((order) => order.status === "Payment Failed").length} orders failed during checkout.</p>
+                <p className="text-sm font-semibold text-slate-900">Delivered</p>
+                <p className="mt-2 text-sm text-slate-600">{deliveredCount} order{deliveredCount === 1 ? '' : 's'} {deliveredCount === 1 ? 'has' : 'have'} been delivered.</p>
               </div>
             </div>
           </div>
