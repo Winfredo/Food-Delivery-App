@@ -88,4 +88,33 @@ const statusUpdate = async (req, res, next) => {
   }
 }
 
-export { placeOrder, verifyOrder, userOrder,listOrders,statusUpdate };
+const retryPayment = async (req, res, next) => {
+  try {
+    const { orderId } = req.body;
+    if (!orderId) {
+      return res.status(400).json({
+        message: "Missing required field: orderId",
+        success: false,
+      });
+    }
+
+    const result = await orderService.retryPayment(orderId);
+    if (result.success) {
+      return res.status(200).json({
+        success: true,
+        checkoutUrl: result.checkoutUrl,
+        message: result.message
+      });
+    } else {
+      return res.status(400).json({
+        success: false,
+        message: result.message
+      });
+    }
+  } catch (error) {
+    console.error("Error in retryPayment:", error);
+    next(error);
+  }
+}
+
+export { placeOrder, verifyOrder, userOrder,listOrders,statusUpdate,retryPayment };
