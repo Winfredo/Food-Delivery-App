@@ -21,7 +21,7 @@ export default function VerifyPage() {
     if (success === "true") {
       router.push("/my-orders");
     } else {
-      router.push("/");
+      router.push("/my-orders");
     }
   };
 
