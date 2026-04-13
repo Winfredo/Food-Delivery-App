@@ -3,9 +3,13 @@ import React, { useState } from "react";
 import Header from "@/components/Header";
 import Exploremenu from "@/components/Exploremenu";
 import FoodDisplay from "@/components/FoodDisplay";
+import { useContext } from "react";
+import { storeContext } from "@/context/StoreContextProvider";
 
 const page = () => {
   const [category, setCategory] = useState("All");
+  const { searchQuery } = useContext(storeContext)!;
+  
   return (
     <div>
       <div className="pt-3">
@@ -15,7 +19,7 @@ const page = () => {
         <section id="explore" className="pt-5">
           <Exploremenu category={category} setCategory={setCategory} />
         </section>
-        <FoodDisplay category={category} />
+        <FoodDisplay category={category} searchQuery={searchQuery} />
       </div>
     </div>
   );
