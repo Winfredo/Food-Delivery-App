@@ -6,6 +6,7 @@ export type MenuType = {
 export type Props = {
   category?: string;
   setCategory?: React.Dispatch<React.SetStateAction<string>>;
+  searchQuery?: string;
 };
 
 export type FoodType = {
@@ -32,6 +33,8 @@ export type StoreContextType = {
   url: string;
   token: string;
   setToken: React.Dispatch<React.SetStateAction<string>>;
+  searchQuery: string;
+  setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
 };
 
 export type LoginPopupProps = {
