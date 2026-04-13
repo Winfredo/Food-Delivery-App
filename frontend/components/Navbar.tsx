@@ -8,9 +8,11 @@ import { useRouter, usePathname } from "next/navigation";
 
 const Navbar = ({ setShowLoginPopup }: LoginPopupProps) => {
   const [activeItem, setActiveItem] = useState("home");
-  const { getTotalCartAmount, token, setToken } = useContext(storeContext)!;
+  const { getTotalCartAmount, token, setToken, searchQuery, setSearchQuery } = useContext(storeContext)!;
   const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const profileRef = useRef<HTMLDivElement>(null);
+  const searchRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
   const pathname = usePathname();
 
@@ -29,6 +31,12 @@ const Navbar = ({ setShowLoginPopup }: LoginPopupProps) => {
         !profileRef.current.contains(event.target as Node)
       ) {
         setIsProfileOpen(false);
+      }
+      if (
+        searchRef.current &&
+        !searchRef.current.contains(event.target as Node)
+      ) {
+        setIsSearchOpen(false);
       }
     };
 
@@ -86,13 +94,60 @@ const Navbar = ({ setShowLoginPopup }: LoginPopupProps) => {
 
         {/* Icons and sign in button */}
         <div className="flex items-center gap-4 sm:gap-6 lg:gap-10">
-          <Image
-            src="/assets/search_icon.png"
-            alt="search icon"
-            width={20}
-            height={20}
-            className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6"
-          />
+          <div className="relative" ref={searchRef}>
+            <button
+              onClick={() => setIsSearchOpen(!isSearchOpen)}
+              className="relative"
+            >
+              <Image
+                src="/assets/search_icon.png"
+                alt="search icon"
+                width={20}
+                height={20}
+                className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 cursor-pointer"
+              />
+            </button>
+            
+            {/* Search Input */}
+            <div
+              className={`absolute right-0 top-full mt-2 transition-all duration-300 transform ${
+                isSearchOpen
+                  ? "opacity-100 visible translate-y-0"
+                  : "opacity-0 invisible translate-y-2"
+              }`}
+            >
+              <div className="bg-white rounded-lg shadow-lg border border-gray-200 p-2 min-w-64">
+                <input
+                  type="text"
+                  placeholder="Search for food items..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      setIsSearchOpen(false);
+                    }
+                    if (e.key === 'Escape') {
+                      setSearchQuery("");
+                      setIsSearchOpen(false);
+                    }
+                  }}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                  autoFocus
+                />
+                {searchQuery && (
+                  <button
+                    onClick={() => {
+                      setSearchQuery("");
+                      setIsSearchOpen(false);
+                    }}
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 text-xl"
+                  >
+                    ×
+                  </button>
+                )}
+              </div>
+            </div>
+          </div>
 
           <div className="relative">
             <Link href="/cart">
