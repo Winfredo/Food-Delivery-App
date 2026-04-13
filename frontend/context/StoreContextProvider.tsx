@@ -10,6 +10,7 @@ const StoreContextProvider = (props: any) => {
   const [cartItems, setCartItems] = useState<CartItems>({});
   const [token, setToken] = useState<string>("");
   const [foodList, setFoodList] = useState<FoodType[]>([]);
+  const [searchQuery, setSearchQuery] = useState<string>("");
   const url = "http://localhost:4000";
   
 
@@ -95,7 +96,9 @@ const StoreContextProvider = (props: any) => {
     getTotalCartAmount,
     url,
     token,
-    setToken
+    setToken,
+    searchQuery,
+    setSearchQuery
   };
 
   return (
