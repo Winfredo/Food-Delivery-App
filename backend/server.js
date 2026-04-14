@@ -1,6 +1,8 @@
 import express from 'express';
 import cors from 'cors'
 import dotenv from 'dotenv';
+import swaggerUi from 'swagger-ui-express';
+import { swaggerSpec } from './config/swagger.js';
 
 dotenv.config({quiet: true});
 
@@ -13,6 +15,7 @@ import orderRoute from './routes/orderRoute.js';
 const app = express();
 const PORT = 4000;
 
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use(cors());
 app.use(express.json());
 
@@ -31,4 +34,5 @@ app.get("/", (req,res)=> {
 
 app.listen(PORT, ()=> {
     console.log(`Server started on port ${PORT}`);
+    console.log('📚 Swagger docs available at http://localhost:4000/api-docs');
 });
