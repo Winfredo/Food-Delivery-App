@@ -15,7 +15,6 @@ export const loginUser = async (req, res, next) => {
             res.status(401).json({ success: false, message: "Invalid email or password" });
         }
         const token = generateToken(user._id);
-        console.log("Generated Token:", token);
         res.json({ success: true, message: "Login successful", user, token });
 
     } catch (error) {
@@ -40,7 +39,6 @@ export const registerUser = async (req, res, next) => {
     }
     const user = await UserService.createUser({ name, email, password });
     const token = generateToken(user._id);
-    console.log("Generated Token:", token);
     res.status(201).json({ success: true, message: "User created successfully", user, token });
   } catch (error) {
     console.error("Error in registerUser:", error);
