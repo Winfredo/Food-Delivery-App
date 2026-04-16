@@ -27,10 +27,10 @@ const verifyOrder = async (req, res, next) => {
 
   try {
     const result = await orderService.verifyOrder(success, orderId);
-    
+
     return res.status(200).json({
       message: result.message,
-      success: result.success
+      success: result.success,
     });
   } catch (error) {
     console.log("Error in verifyOrder:", error);
@@ -41,7 +41,7 @@ const verifyOrder = async (req, res, next) => {
 const userOrder = async (req, res, next) => {
   try {
     const userId = req.body.userId;
-    
+
     if (!userId) {
       return res.status(400).json({
         message: "User not authenticated",
@@ -50,7 +50,13 @@ const userOrder = async (req, res, next) => {
     }
 
     const orders = await orderService.userOrder(userId);
-    return res.status(200).json({ success: true, data: orders, message: "User orders fetched successfully" });
+    return res
+      .status(200)
+      .json({
+        success: true,
+        data: orders,
+        message: "User orders fetched successfully",
+      });
   } catch (error) {
     console.error("Error in userOrder:", error);
     next(error);
@@ -60,7 +66,13 @@ const userOrder = async (req, res, next) => {
 const listOrders = async (req, res, next) => {
   try {
     const orders = await orderService.listOrders();
-    return res.status(200).json({ success: true, data: orders, message: "Orders fetched successfully" });
+    return res
+      .status(200)
+      .json({
+        success: true,
+        data: orders,
+        message: "Orders fetched successfully",
+      });
   } catch (error) {
     console.error("Error in listOrders:", error);
     next(error);
@@ -80,13 +92,13 @@ const statusUpdate = async (req, res, next) => {
     const result = await orderService.statusUpdate(orderId, status);
     return res.status(200).json({
       message: result.message,
-      success: result.success
+      success: result.success,
     });
   } catch (error) {
     console.error("Error in statusUpdate:", error);
     next(error);
   }
-}
+};
 
 const retryPayment = async (req, res, next) => {
   try {
@@ -103,18 +115,25 @@ const retryPayment = async (req, res, next) => {
       return res.status(200).json({
         success: true,
         checkoutUrl: result.checkoutUrl,
-        message: result.message
+        message: result.message,
       });
     } else {
       return res.status(400).json({
         success: false,
-        message: result.message
+        message: result.message,
       });
     }
   } catch (error) {
     console.error("Error in retryPayment:", error);
     next(error);
   }
-}
+};
 
-export { placeOrder, verifyOrder, userOrder,listOrders,statusUpdate,retryPayment };
+export {
+  placeOrder,
+  verifyOrder,
+  userOrder,
+  listOrders,
+  statusUpdate,
+  retryPayment,
+};

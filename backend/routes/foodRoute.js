@@ -1,16 +1,19 @@
-import express from 'express';
+import express from "express";
 const router = express.Router();
-import { createFood, deleteFood, listFood } from '../controllers/foodController.js';
-import multer from 'multer';
-
+import {
+  createFood,
+  deleteFood,
+  listFood,
+} from "../controllers/foodController.js";
+import multer from "multer";
 
 //image storage configuration
 const storage = multer.diskStorage({
-    destination: "uploads/",
-    filename: (req, file, cb) => {
-       return cb(null, `${Date.now()}-${file.originalname}`);
-    }
-})
+  destination: "uploads/",
+  filename: (req, file, cb) => {
+    return cb(null, `${Date.now()}-${file.originalname}`);
+  },
+});
 
 const upload = multer({ storage: storage });
 
@@ -50,7 +53,7 @@ const upload = multer({ storage: storage });
  *       400:
  *         description: Bad request, invalid input data
  */
-router.post('/create', upload.single('image'), createFood);
+router.post("/create", upload.single("image"), createFood);
 
 /**
  * @swagger
@@ -75,7 +78,7 @@ router.post('/create', upload.single('image'), createFood);
  *                   items:
  *                     $ref: '#/components/schemas/Food'
  */
-router.get('/list', listFood);
+router.get("/list", listFood);
 
 /**
  * @swagger
@@ -101,7 +104,6 @@ router.get('/list', listFood);
  *       404:
  *         description: Food not found
  */
-router.delete('/delete', deleteFood);
+router.delete("/delete", deleteFood);
 
-
-export default router; 
+export default router;

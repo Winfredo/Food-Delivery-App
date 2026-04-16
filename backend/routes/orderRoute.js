@@ -1,7 +1,14 @@
-import express from 'express';
+import express from "express";
 const router = express.Router();
-import authMiddleware from '../middleware/auth.js';
-import { placeOrder, verifyOrder, userOrder, listOrders, statusUpdate, retryPayment } from '../controllers/orderController.js';
+import authMiddleware from "../middleware/auth.js";
+import {
+  placeOrder,
+  verifyOrder,
+  userOrder,
+  listOrders,
+  statusUpdate,
+  retryPayment,
+} from "../controllers/orderController.js";
 
 /**
  * @swagger
@@ -47,7 +54,7 @@ import { placeOrder, verifyOrder, userOrder, listOrders, statusUpdate, retryPaym
  *       400:
  *         description: Failed to place order
  */
-router.post('/place', authMiddleware, placeOrder);
+router.post("/place", authMiddleware, placeOrder);
 
 /**
  * @swagger
@@ -76,7 +83,7 @@ router.post('/place', authMiddleware, placeOrder);
  *       400:
  *         description: Missing required fields or verification failed
  */
-router.post('/verify', verifyOrder);
+router.post("/verify", verifyOrder);
 
 /**
  * @swagger
@@ -105,7 +112,7 @@ router.post('/verify', verifyOrder);
  *       400:
  *         description: User not authenticated
  */
-router.get('/userorders', authMiddleware, userOrder);
+router.get("/userorders", authMiddleware, userOrder);
 
 /**
  * @swagger
@@ -130,7 +137,7 @@ router.get('/userorders', authMiddleware, userOrder);
  *                 message:
  *                   type: string
  */
-router.get('/list', listOrders);
+router.get("/list", listOrders);
 
 /**
  * @swagger
@@ -159,7 +166,7 @@ router.get('/list', listOrders);
  *       400:
  *         description: Missing required fields
  */
-router.post('/status', statusUpdate);
+router.post("/status", statusUpdate);
 
 /**
  * @swagger
@@ -192,6 +199,6 @@ router.post('/status', statusUpdate);
  *       400:
  *         description: Missing required field or retry failed
  */
-router.post('/retry', authMiddleware, retryPayment);
+router.post("/retry", authMiddleware, retryPayment);
 
 export default router;
