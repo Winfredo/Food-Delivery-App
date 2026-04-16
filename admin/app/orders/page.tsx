@@ -5,7 +5,7 @@ import { toast, Bounce } from "react-toastify";
 
 const page = () => {
   const [orders, setOrders] = React.useState([]);
-  const url = "http://localhost:4000";
+const url = process.env.NEXT_PUBLIC_API_URL;
 
   const fetchOrders = async () => {
     const response = await axios.get(`${url}/api/order/list`);

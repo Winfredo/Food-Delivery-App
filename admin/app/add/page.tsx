@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { toast, Bounce } from "react-toastify";
 const page = () => {
-  const url = "http://localhost:4000";
+  const url = process.env.NEXT_PUBLIC_API_URL;
   const [image, setImage] = useState<File | null>(null);
   const [data, setData] = useState({
     name: "",

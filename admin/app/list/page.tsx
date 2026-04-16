@@ -16,7 +16,7 @@ interface Food {
 const page = () => {
   const [list, setList] = useState<Food[]>([]);
   const [loading, setLoading] = useState(true);
-  const url = "http://localhost:4000";
+  const url = process.env.NEXT_PUBLIC_API_URL;
 
   const fetchData = async () => {
     const response = await axios.get(`${url}/api/food/list`);
