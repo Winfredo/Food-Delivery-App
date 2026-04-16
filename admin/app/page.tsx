@@ -6,7 +6,7 @@ import axios from "axios";
 const page = () => {
   const [orders, setOrders] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const url = "http://localhost:4000";
+  const url = process.env.NEXT_PUBLIC_API_URL;
 
   const fetchOrders = async () => {
     try {
