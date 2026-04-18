@@ -11,7 +11,7 @@ const StoreContextProvider = (props: any) => {
   const [token, setToken] = useState<string>("");
   const [foodList, setFoodList] = useState<FoodType[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>("");
-  const url = "http://localhost:4000";
+  const url = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
   
 
   const addToCart = async (foodId: string) => {
