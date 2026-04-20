@@ -6,12 +6,33 @@ import {
   listFood,
 } from "../controllers/foodController.js";
 import multer from "multer";
+import { v2 as cloudinary } from "cloudinary";
+import { CloudinaryStorage } from "multer-storage-cloudinary";
+
+//cloudinary configuration
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 //image storage configuration
-const storage = multer.diskStorage({
-  destination: "uploads/",
-  filename: (req, file, cb) => {
-    return cb(null, `${Date.now()}-${file.originalname}`);
+// const storage = multer.diskStorage({
+//   destination: "uploads/",
+//   filename: (req, file, cb) => {
+//     return cb(null, `${Date.now()}-${file.originalname}`);
+//   },
+// });
+
+// cloudinary storage
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: "food-delivery-app",
+    allowed_formats: ["jpg", "jpeg", "png"],
+    use_filename: true,
+    unique_filename: false,
+    overwrite: true,
   },
 });
 
