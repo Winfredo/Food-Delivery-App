@@ -42,8 +42,7 @@ const storage = new CloudinaryStorage({
     folder: "food-delivery-app",
     allowed_formats: ["jpg", "jpeg", "png"],
     public_id: (req, file) => {
-      const nameWithoutExt = file.originalname.split('.').slice(0, -1).join('.');
-      return `${Date.now()}-${nameWithoutExt}`;
+      return file.originalname.split('.').slice(0, -1).join('.');
     }
   },
 });
