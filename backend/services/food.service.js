@@ -40,6 +40,11 @@ class FoodService {
 
     return food; 
   }
+
+  static async updateFood(foodId, updateData) {
+    const food = await foodModel.findByIdAndUpdate(foodId, updateData, { new: true });
+    return food;
+  }
 }
 
 export default FoodService;
