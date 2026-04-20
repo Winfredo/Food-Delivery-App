@@ -4,6 +4,7 @@ import {
   createFood,
   deleteFood,
   listFood,
+  updateFood,
 } from "../controllers/foodController.js";
 import multer from "multer";
 import { v2 as cloudinary } from "cloudinary";
@@ -126,5 +127,53 @@ router.get("/list", listFood);
  *         description: Food not found
  */
 router.delete("/delete", deleteFood);
+
+/**
+ * @swagger
+ * /api/food/update:
+ *   put:
+ *     summary: Update a food item by id
+ *     tags: [Food]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - id
+ *             properties:
+ *               id:
+ *                 type: string
+ *                 description: ID of the food item to update
+ *               name:
+ *                 type: string
+ *               description:
+ *                 type: string
+ *               price:
+ *                 type: number
+ *               category:
+ *                 type: string
+ *               image:
+ *                 type: string
+ *                 format: binary
+ *     responses:
+ *       200:
+ *         description: Food updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
+ *                 data:
+ *                   $ref: '#/components/schemas/Food'
+ *       404:
+ *         description: Food not found
+ */
+router.put("/update", upload.single("image"), updateFood);
 
 export default router;
