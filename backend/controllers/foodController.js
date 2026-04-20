@@ -37,4 +37,19 @@ import FoodService from '../services/food.service.js';
     }
  }
 
- export { createFood, listFood, deleteFood }
+ export const updateFood = async (req, res) => {
+  try {
+    const { id, name, description, category, price } = req.body;
+    const updateData = { name, description, category, price };
+    if (req.file) {
+      updateData.image = req.file.path;
+    }
+    const food = await FoodService.updateFood(id, updateData);
+    if (!food) return res.json({ success: false, message: "Food not found" });
+    res.json({ success: true, message: "Food updated successfully", data: food });
+  } catch (error) {
+    res.json({ success: false, message: error.message });
+  }
+};
+
+ export { createFood, listFood, deleteFood, updateFood }
