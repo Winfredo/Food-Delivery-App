@@ -9,7 +9,7 @@ const FoodItem = ({ _id, name, image, price, description }: FoodType) => {
   return (
     <div className="w-full m-auto rounded-[15px] shadow-[0px_0px_10px_#00000015] animation-fadeIn cursor-pointer">
       <div className="relative">
-        <img className="w-full rounded-t-[15px]" src={`${url}/images/${image}`} alt={name} />
+        <img className="w-full rounded-t-[15px]" src={image} alt={name} />
 
         {!cartItems?.[_id] ? (
           <img
