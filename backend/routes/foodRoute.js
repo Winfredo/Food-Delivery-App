@@ -26,17 +26,27 @@ cloudinary.config({
 // });
 
 // cloudinary storage
+// const storage = new CloudinaryStorage({
+//   cloudinary: cloudinary,
+//   params: {
+//     folder: "food-delivery-app",
+//     allowed_formats: ["jpg", "jpeg", "png"],
+//     use_filename: true,
+//     unique_filename: false,
+//     overwrite: true,
+//   },
+// });
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
     folder: "food-delivery-app",
     allowed_formats: ["jpg", "jpeg", "png"],
-    use_filename: true,
-    unique_filename: false,
-    overwrite: true,
+    public_id: (req, file) => {
+      const nameWithoutExt = file.originalname.split('.').slice(0, -1).join('.');
+      return `${Date.now()}-${nameWithoutExt}`;
+    }
   },
 });
-
 const upload = multer({ storage: storage });
 
 /**
