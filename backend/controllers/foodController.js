@@ -37,7 +37,7 @@ import FoodService from '../services/food.service.js';
     }
  }
 
- export const updateFood = async (req, res) => {
+  const updateFood = async (req, res) => {
   try {
     const { id, name, description, category, price } = req.body;
     const updateData = { name, description, category, price };
