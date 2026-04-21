@@ -11,6 +11,7 @@ import foodRoute from "./routes/foodRoute.js";
 import userRoute from "./routes/userRoute.js";
 import cartRoute from "./routes/cartRoute.js";
 import orderRoute from "./routes/orderRoute.js";
+import adminRoute from "./routes/adminRoute.js";
 
 const app = express();
 const PORT = process.env.PORT || 4000;
@@ -27,6 +28,7 @@ app.use("/images", express.static("uploads"));
 app.use("/api/user", userRoute);
 app.use("/api/cart", cartRoute);
 app.use("/api/order", orderRoute);
+app.use("/api/admin", adminRoute);
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
