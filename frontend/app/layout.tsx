@@ -4,6 +4,8 @@ import "./globals.css";
 import StoreContextProvider from "@/context/StoreContextProvider";
 import Footer from "@/components/Footer";
 import ClientNavbar from "@/components/ClientNavbar";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,6 +32,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen`}
       >
+        <ToastContainer />
         <div className="w-[80%] mx-auto flex-1 mt-16">
           <StoreContextProvider>
             <section className="mb-5">
