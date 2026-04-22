@@ -14,6 +14,23 @@ const page = () => {
     console.log("Fetched orders:", response.data.data);
   };
 
+  const handleDeleteOrder = async (orderId: string) => {
+    try {
+      const response = await axios.delete(`${url}/api/order/${orderId}`, {
+        headers: { token },
+      });
+      if (response.data.success) {
+        alert("Order deleted successfully");
+        fetchOrders();
+      } else {
+        alert("Failed to delete order");
+      }
+    } catch (error) {
+      console.error("Error deleting order:", error);
+      alert("Error deleting order");
+    }
+  }
+
   const handleRetryPayment = async (orderId: string) => {
     try {
       const response = await axios.post(`${url}/api/order/retry`, {
@@ -68,7 +85,10 @@ const page = () => {
                 <p className="text-gray-600 text-sm md:text-base font-bold ">Items: {order.items.length}</p>
                 <p className={`font-semibold text-sm md:text-base ${order.payment ? (order.status === 'Food Processing' ? 'text-yellow-600' : order.status === 'Delivered' ? 'text-green-500' : 'text-blue-500') : 'text-red-500'}`}>Status: {order.payment ? order.status : 'Payment Pending'}</p>
                 {order.payment ? (
-                  <button onClick={fetchOrders} className="mt-2 w-full md:w-auto px-3 md:px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 text-sm md:text-base">Track Order</button>
+                  <div>
+                    <button onClick={fetchOrders} className="mt-2 w-full md:w-auto px-3 md:px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 text-sm md:text-base">Track Order</button>
+                    <button onClick={() => handleDeleteOrder(order._id)} className="mt-2 w-full md:w-auto px-3 md:px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 text-sm md:text-base">Delete Order</button>
+                    </div>
                 ) : (
                   <button onClick={() => handleRetryPayment(order._id)} className="mt-2 w-full md:w-auto px-3 md:px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 text-sm md:text-base">Pay Now</button>
                 )}
