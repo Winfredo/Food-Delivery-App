@@ -2,6 +2,7 @@
 import { storeContext } from "@/context/StoreContextProvider";
 import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
 const page = () => {
   const { url, token } = useContext(storeContext)!;
   const [data, setData] = useState([]);
@@ -14,22 +15,30 @@ const page = () => {
     console.log("Fetched orders:", response.data.data);
   };
 
-  const handleDeleteOrder = async (orderId: string) => {
+const handleDeleteOrder = async (orderId: string) => {
     try {
       const response = await axios.delete(`${url}/api/order/${orderId}`, {
         headers: { token },
       });
       if (response.data.success) {
-        alert("Order deleted successfully");
+        toast.success("Order deleted successfully!", { 
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          theme: "dark",
+        });
         fetchOrders();
       } else {
-        alert("Failed to delete order");
+        toast.error("Failed to delete order", { theme: "dark" });
       }
     } catch (error) {
       console.error("Error deleting order:", error);
-      alert("Error deleting order");
+      toast.error("Error deleting order", { theme: "dark" });
     }
-  };
+  }
 
   const handleRetryPayment = async (orderId: string) => {
     try {
