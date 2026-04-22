@@ -24,9 +24,17 @@ const url = process.env.NEXT_PUBLIC_API_URL;
     }
   }
 
-  useEffect(() => {
+useEffect(() => {
+  fetchOrders();
+  
+  // Refetch every 10 seconds automatically
+  const interval = setInterval(() => {
     fetchOrders();
-  }, []);
+  }, 30000);
+
+  // Cleanup on unmount
+  return () => clearInterval(interval);
+}, []);
   return (
     <div className="p-4 md:p-6 bg-gray-50 min-h-screen w-full">
       <div className="max-w-6xl mx-auto">
