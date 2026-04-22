@@ -140,6 +140,36 @@ router.get("/userorders", authMiddleware, userOrder);
  */
 router.get("/list", listOrders);
 
+/**
+ * @swagger
+ * /api/order/{orderId}:
+ *   delete:
+ *     summary: Delete an order by ID
+ *     tags: [Order]
+ *     parameters:
+ *       - in: path
+ *         name: orderId
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The ID of the order to delete
+ *     responses:
+ *       200:
+ *         description: Order deleted successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
+ *       404:
+ *         description: Order not found
+ *       400:
+ *         description: Failed to delete order  
+ */
 router.delete("/:orderId", deleteOrder);
 
 /**
