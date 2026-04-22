@@ -6,6 +6,7 @@ import {
   verifyOrder,
   userOrder,
   listOrders,
+  deleteOrder,
   statusUpdate,
   retryPayment,
 } from "../controllers/orderController.js";
@@ -138,6 +139,8 @@ router.get("/userorders", authMiddleware, userOrder);
  *                   type: string
  */
 router.get("/list", listOrders);
+
+router.delete("/:orderId", deleteOrder);
 
 /**
  * @swagger
