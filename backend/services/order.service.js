@@ -13,7 +13,7 @@ function getStripe() {
 
 class OrderService {
   static async placeOrder(req, res, next) {
-    const frontend_url = "http://localhost:3000";
+    const frontend_url = process.env.FRONTEND_URL || "http://localhost:3000";
 
     try {
       // Create and save the order
