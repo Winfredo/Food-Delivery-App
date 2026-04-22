@@ -91,14 +91,15 @@ class OrderService {
     }
   }
 
-  static async deleteOrder(orderId) {
-    try {
-      const deletedOrder = await orderModel.findByIdAndDelete(orderId);
-      return deletedOrder;
-    } catch (error) {
-      return { success: false, message: "Failed to delete order" };
-    }
+static async deleteOrder(orderId) {
+  try {
+    const deletedOrder = await orderModel.findByIdAndDelete(orderId);
+    if (!deletedOrder) return { success: false, message: "Order not found" };
+    return { success: true, message: "Order deleted successfully" };
+  } catch (error) {
+    return { success: false, message: "Failed to delete order" };
   }
+}
 
   static async userOrder(userId) {
     try {
