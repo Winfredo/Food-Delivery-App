@@ -100,6 +100,27 @@ const statusUpdate = async (req, res, next) => {
   }
 };
 
+const deleteOrder = async (req, res, next) => {
+  try {
+    const { orderId } = req.body;
+    if (!orderId) {
+      return res.status(400).json({
+        message: "Missing required field: orderId",
+        success: false,
+      });
+    }
+
+    const result = await orderService.deleteOrder(orderId);
+    return res.status(200).json({
+      message: result.message,
+      success: result.success,
+    });
+  } catch (error) {
+    console.error("Error in deleteOrder:", error);
+    next(error);
+  }
+};
+
 const retryPayment = async (req, res, next) => {
   try {
     const { orderId } = req.body;
@@ -136,4 +157,5 @@ export {
   listOrders,
   statusUpdate,
   retryPayment,
+  deleteOrder
 };
