@@ -11,7 +11,7 @@ export const menuList: MenuType[] = [
     image: "/assets/menu_2.png",
   },
   {
-    name: "Deserts",
+    name: "Desert",
     image: "/assets/menu_3.png",
   },
   {
@@ -116,7 +116,7 @@ export const foodList: FoodType[] = [
     price: 14,
     description:
       "Food provides essential nutrients for overall health and well-being",
-    category: "Deserts",
+    category: "desert",
   },
   {
     _id: "10",
@@ -125,7 +125,7 @@ export const foodList: FoodType[] = [
     price: 22,
     description:
       "Food provides essential nutrients for overall health and well-being",
-    category: "Deserts",
+    category: "desert",
   },
   {
     _id: "11",
@@ -134,7 +134,7 @@ export const foodList: FoodType[] = [
     price: 10,
     description:
       "Food provides essential nutrients for overall health and well-being",
-    category: "Deserts",
+    category: "desert",
   },
   {
     _id: "12",
@@ -143,7 +143,7 @@ export const foodList: FoodType[] = [
     price: 12,
     description:
       "Food provides essential nutrients for overall health and well-being",
-    category: "Deserts",
+    category: "desert",
   },
   {
     _id: "13",
