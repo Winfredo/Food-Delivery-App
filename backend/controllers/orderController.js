@@ -102,7 +102,7 @@ const statusUpdate = async (req, res, next) => {
 
 const deleteOrder = async (req, res, next) => {
   try {
-    const { orderId } = req.body;
+    const { orderId } = req.params; // ← change from req.body to req.params
     if (!orderId) {
       return res.status(400).json({
         message: "Missing required field: orderId",
