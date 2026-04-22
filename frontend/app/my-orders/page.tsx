@@ -23,7 +23,7 @@ const handleDeleteOrder = async (orderId: string) => {
       if (response.data.success) {
         toast.success("Order deleted successfully!", { 
           position: "top-right",
-          autoClose: 5000,
+          autoClose: 2000,
           hideProgressBar: false,
           closeOnClick: false,
           pauseOnHover: true,
