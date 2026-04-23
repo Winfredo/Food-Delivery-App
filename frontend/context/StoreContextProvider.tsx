@@ -11,6 +11,7 @@ const StoreContextProvider = (props: any) => {
   const [token, setToken] = useState<string>("");
   const [foodList, setFoodList] = useState<FoodType[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>("");
+  const [foodListLoading, setFoodListLoading] = useState<boolean>(true);
   const url = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
   
 
@@ -56,10 +57,14 @@ const StoreContextProvider = (props: any) => {
     return Math.round(totalAmount * 100) / 100;
   }
 
-  const fetchFoodList = async () => {
-      const response = await axios.get(url + "/api/food/list");
-      setFoodList(response.data.data);
+const fetchFoodList = async () => {
+  try {
+    const response = await axios.get(url + "/api/food/list");
+    setFoodList(response.data.data);
+  } finally {
+    setFoodListLoading(false);
   }
+}
 
   const loadCartData = async (token: string) => {
     if (!token) return;
@@ -98,7 +103,8 @@ const StoreContextProvider = (props: any) => {
     token,
     setToken,
     searchQuery,
-    setSearchQuery
+    setSearchQuery,
+    foodListLoading
   };
 
   return (
