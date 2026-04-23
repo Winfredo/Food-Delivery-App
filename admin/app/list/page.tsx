@@ -13,7 +13,7 @@ interface Food {
   __v?: number;
 }
 
-const ITEMS_PER_PAGE = 10;
+const ITEMS_PER_PAGE = 5;
 
 const page = () => {
   const [list, setList] = useState<Food[]>([]);
