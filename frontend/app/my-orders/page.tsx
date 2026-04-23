@@ -15,13 +15,13 @@ const page = () => {
     console.log("Fetched orders:", response.data.data);
   };
 
-const handleDeleteOrder = async (orderId: string) => {
+  const handleDeleteOrder = async (orderId: string) => {
     try {
       const response = await axios.delete(`${url}/api/order/${orderId}`, {
         headers: { token },
       });
       if (response.data.success) {
-        toast.success("Order deleted successfully!", { 
+        toast.success("Order deleted successfully!", {
           position: "top-right",
           autoClose: 2000,
           hideProgressBar: false,
@@ -38,7 +38,7 @@ const handleDeleteOrder = async (orderId: string) => {
       console.error("Error deleting order:", error);
       toast.error("Error deleting order", { theme: "dark" });
     }
-  }
+  };
 
   const handleRetryPayment = async (orderId: string) => {
     try {
@@ -140,7 +140,7 @@ const handleDeleteOrder = async (orderId: string) => {
                       {order.status === "Delivered" && (
                         <button
                           onClick={() => handleDeleteOrder(order._id)}
-                          className="mt-2 w-full md:w-auto px-3 md:px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 text-sm md:text-base"
+                          className="mt-2 w-full md:w-auto px-3 md:px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 active:scale-95 active:bg-red-700 transition-all duration-150 text-sm md:text-base"
                         >
                           Delete Order
                         </button>
@@ -156,7 +156,7 @@ const handleDeleteOrder = async (orderId: string) => {
                       </button>
                       <button
                         onClick={() => handleDeleteOrder(order._id)}
-                        className="mt-2 w-full md:w-auto px-3 md:px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 text-sm md:text-base"
+                        className="mt-2 w-full md:w-auto px-3 md:px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 active:scale-95 active:bg-red-700 transition-all duration-150 text-sm md:text-base"
                       >
                         Delete Order
                       </button>

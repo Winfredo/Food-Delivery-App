@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 const page = () => {
   const { getTotalCartAmount, token, cartItems, foodList, url } =
     useContext(storeContext)!;
-    const router = useRouter();
+  const router = useRouter();
 
   const [data, setData] = useState({
     firstName: "",
@@ -75,11 +75,11 @@ const page = () => {
   };
 
   useEffect(() => {
-   if (!token){
-    router.push("/cart");
-   }else if (getTotalCartAmount() === 0) {
-    router.push("/cart");
-   }
+    if (!token) {
+      router.push("/cart");
+    } else if (getTotalCartAmount() === 0) {
+      router.push("/cart");
+    }
   }, [token]);
   return (
     <form
@@ -206,7 +206,7 @@ const page = () => {
           </div>
           <button
             type="submit"
-            className="px-0 rounded-lg py-3.5 border-none mt-10 text-white bg-[#FF6347] w-[max(15vw,200px)] cursor-pointer"
+            className="px-0 rounded-lg py-3.5 border-none mt-10 text-white bg-[#FF6347] w-[max(15vw,200px)] cursor-pointer active:scale-95 active:bg-[#e5533d] transition-all duration-150"
           >
             Proceed to Payment
           </button>
