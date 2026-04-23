@@ -35,6 +35,7 @@ export type StoreContextType = {
   setToken: React.Dispatch<React.SetStateAction<string>>;
   searchQuery: string;
   setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
+  foodListLoading: boolean;
 };
 
 export type LoginPopupProps = {
