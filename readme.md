@@ -21,3 +21,8 @@ https://tasty-me.netlify.app
 ![Homepage](./screenshots/homepage-4.png)
 ![Homepage](./screenshots/homepage-5.png)
 
+# UI Mobile views
+![Homepage](./screenshots/mobile-view.png)
+![Homepage](./screenshots/mobile-view-2.png)
+![Homepage](./screenshots/mobile-view-3.png)
+![Homepage](./screenshots/mobile-view-4.png)
