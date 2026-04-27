@@ -15,3 +15,7 @@ https://tasty-me.netlify.app
 - **Database**: MongoDB Atlas
 
 # UI Desktop views
+![Homepage](./screenshots/homepage.png)
+![Homepage](./screenshots/homepage-2.png)
+![Homepage](./screenshots/homepage-3.png)
+![Homepage](./screenshots/homepage-4.png)
