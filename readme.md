@@ -4,7 +4,7 @@ A full-stack food delivery application where users can browse food items, add to
 
 # Live Demo
 
-https://tasty-me.netlify.app
+**Live Demo:** [tasty-me.netlify.app](https://tasty-me.netlify.app)
 
 # Stack Used
 
@@ -22,7 +22,7 @@ https://tasty-me.netlify.app
 ![Homepage](./screenshots/homepage-5.png)
 
 # UI Mobile views
-![Homepage](./screenshots/mobile-view.png)
-![Homepage](./screenshots/mobile-view-2.png)
-![Homepage](./screenshots/mobile-view-3.png)
-![Homepage](./screenshots/mobile-view-4.png)
+![Mobile](./screenshots/mobile-view.png)
+![Mobile](./screenshots/mobile-view-2.png)
+![Mobile](./screenshots/mobile-view-3.png)
+![Mobile](./screenshots/mobile-view-4.png)
