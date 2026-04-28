@@ -10,7 +10,8 @@ const FoodDisplay = ({ category, searchQuery }: Props) => {
 
   const filteredFoodList = foodList?.filter((item) => {
     const matchesCategory = category === "All" || item.category === category;
-    const matchesSearch = !searchQuery ||
+    const matchesSearch =
+      !searchQuery ||
       item.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
       item.description?.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesCategory && matchesSearch;
@@ -22,7 +23,10 @@ const FoodDisplay = ({ category, searchQuery }: Props) => {
         <h2 className="font-bold text-2xl pb-4">Top dishes near you</h2>
         <div className="grid grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-y-12 mt-7.5 gap-7.5">
           {Array.from({ length: 8 }).map((_, i) => (
-            <div key={i} className="w-full rounded-[15px] shadow-[0px_0px_10px_#00000015] animate-pulse">
+            <div
+              key={i}
+              className="w-full rounded-[15px] shadow-[0px_0px_10px_#00000015] animate-pulse"
+            >
               <div className="w-full h-48 bg-gray-200 rounded-t-[15px]" />
               <div className="p-2 space-y-2">
                 <div className="h-4 bg-gray-200 rounded w-3/4" />
@@ -40,7 +44,9 @@ const FoodDisplay = ({ category, searchQuery }: Props) => {
   return (
     <div className="mt-7.5">
       <h2 className="font-bold text-2xl pb-4">
-        {searchQuery ? `Search results for "${searchQuery}"` : "Top dishes near you"}
+        {searchQuery
+          ? `Search results for "${searchQuery}"`
+          : "Top dishes near you"}
       </h2>
       <div className="grid grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-y-12 mt-7.5 gap-7.5">
         {filteredFoodList?.map((item, index) => (
@@ -55,7 +61,9 @@ const FoodDisplay = ({ category, searchQuery }: Props) => {
         ))}
         {filteredFoodList?.length === 0 && searchQuery && (
           <div className="col-span-full text-center py-8">
-            <p className="text-gray-500 text-lg">No items found for "{searchQuery}"</p>
+            <p className="text-gray-500 text-lg">
+              No items found for "{searchQuery}"
+            </p>
           </div>
         )}
       </div>
