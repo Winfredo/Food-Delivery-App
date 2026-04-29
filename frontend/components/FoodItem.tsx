@@ -3,13 +3,41 @@ import React, { useContext } from "react";
 import { FoodType } from "@/types/type";
 import Image from "next/image";
 import { storeContext } from "@/context/StoreContextProvider";
-const FoodItem = ({ _id, name, image, price, description }: FoodType) => {
-  const { addToCart, removeFromCart, cartItems,url } = useContext(storeContext)!;
+
+interface FoodItemProps extends FoodType {
+  priority?: boolean;
+  loading?: "lazy" | "eager";
+}
+
+const FoodItem = ({ 
+  _id, 
+  name, 
+  image, 
+  price, 
+  description, 
+  priority = false, 
+  loading = "lazy" 
+}: FoodItemProps) => {
+  const { addToCart, removeFromCart, cartItems } = useContext(storeContext)!;
+
+  
+  const safeImage = image || "/assets/placeholder.png";
+  const safeName = name || "Food Item";
 
   return (
     <div className="w-full m-auto rounded-[15px] shadow-[0px_0px_10px_#00000015] animation-fadeIn cursor-pointer">
       <div className="relative">
-        <img className="w-full rounded-t-[15px]" src={image}   alt={name} />
+        <div className="relative w-full h-48">
+          <Image
+            src={safeImage}
+            alt={safeName}
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            loading={loading}
+            priority={priority}
+            className="rounded-t-[15px] object-cover"
+          />
+        </div>
 
         {!cartItems?.[_id] ? (
           <img
@@ -38,18 +66,20 @@ const FoodItem = ({ _id, name, image, price, description }: FoodType) => {
       </div>
       <div className="p-2">
         <div className="flex justify-between items-center mb-2">
-          <h3 className="font-bold text-[17px]">{name}</h3>
+          <h3 className="font-bold text-[17px]">{safeName}</h3>
           <Image
             className="w-16"
             src="/assets/rating_starts.png"
             alt="rating"
             width={70}
             height={70}
+            priority={false}
+            loading="lazy"
           />
         </div>
-        <p className="text-[12px] text-[#676767]">{description}</p>
+        <p className="text-[12px] text-[#676767]">{description || ""}</p>
         <div className="text-[18px] my-2 font-semibold text-[#FF6347]">
-          ${price}
+          ${price || 0}
         </div>
       </div>
     </div>
