@@ -57,8 +57,6 @@ const FoodDisplay = ({ category, searchQuery }: Props) => {
             image={item.image}
             price={item.price}
             description={item.description}
-            priority={index < 4}
-            loading={index < 4 ? "eager" : "lazy"}
           />
         ))}
         {filteredFoodList?.length === 0 && searchQuery && (
