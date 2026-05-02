@@ -26,3 +26,12 @@ A full-stack food delivery application where users can browse food items, add to
 ![Mobile](./screenshots/mobile-view-2.png)
 ![Mobile](./screenshots/mobile-view-3.png)
 ![Mobile](./screenshots/mobile-view-4.png)
+
+# Admin Panel UI
+![Admin](./screenshots/admin-login.png)
+![Admin](./screenshots/admin-dashboard.png)
+![Admin](./screenshots/admin-addproduct.png)
+![Admin](./screenshots/admin-listproduct.png)
+![Admin](./screenshots/admin-listorders.png)
+
+
