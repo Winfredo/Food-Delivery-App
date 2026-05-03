@@ -1,5 +1,9 @@
 import express from "express";
-import { addToCart, removeFromCart, getCart } from "../controllers/cartController.js";
+import {
+  addToCart,
+  removeFromCart,
+  getCart,
+} from "../controllers/cartController.js";
 import authMiddleware from "../middleware/auth.js";
 const router = express.Router();
 
@@ -39,7 +43,7 @@ const router = express.Router();
  *       404:
  *         description: User not found
  */
-router.post('/add', authMiddleware, addToCart);
+router.post("/add", authMiddleware, addToCart);
 
 /**
  * @swagger
@@ -70,7 +74,7 @@ router.post('/add', authMiddleware, addToCart);
  *       404:
  *         description: User not found or item not found in cart
  */
-router.post('/remove', authMiddleware, removeFromCart);
+router.post("/remove", authMiddleware, removeFromCart);
 
 /**
  * @swagger
@@ -96,6 +100,6 @@ router.post('/remove', authMiddleware, removeFromCart);
  *       404:
  *         description: User not found
  */
-router.get('/list', authMiddleware, getCart);
+router.get("/list", authMiddleware, getCart);
 
-export default router; 
+export default router;
