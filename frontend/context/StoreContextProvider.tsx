@@ -3,6 +3,7 @@ import React, { createContext, useEffect, useState } from "react";
 import { CartItems, FoodType } from "@/types/type";
 import { StoreContextType } from "@/types/type";
 import axios from "axios";
+import useSWR from 'swr';
 
 export const storeContext = createContext<StoreContextType | null>(null);
 
@@ -11,8 +12,33 @@ const StoreContextProvider = (props: any) => {
   const [token, setToken] = useState<string>("");
   const [foodList, setFoodList] = useState<FoodType[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>("");
-  const [foodListLoading, setFoodListLoading] = useState<boolean>(true);
   const url = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+
+  // Fetcher function for SWR
+  const fetcher = (url: string) => axios.get(url).then(res => res.data.data);
+
+  // Use SWR for food list caching
+  const { data: swrFoodList, error: foodListError, isLoading: foodListLoading } = useSWR(`${url}/api/food/list`, fetcher);
+
+  // Update foodList state when SWR data is available
+  useEffect(() => {
+    if (swrFoodList) {
+      setFoodList(swrFoodList);
+    }
+  }, [swrFoodList]);
+
+
+  const { data: cartData, error: cartError } = useSWR(
+    token ? [`${url}/api/cart/list`, token] : null,
+    ([url, token]) => axios.get(url, { headers: { token } }).then(res => res.data.cartData || {})
+  );
+
+
+  useEffect(() => {
+    if (cartData) {
+      setCartItems(cartData);
+    }
+  }, [cartData]);
   
 
   const addToCart = async (foodId: string) => {
@@ -49,7 +75,7 @@ const StoreContextProvider = (props: any) => {
   const getTotalCartAmount = () => {
     let totalAmount = 0;
     for (const foodId in cartItems) {
-      const item = foodList.find((food) => food._id === foodId);
+      const item = foodList?.find((food: any) => food._id === foodId);
       if (item) {
         totalAmount += item.price * cartItems[foodId];
       }
@@ -57,43 +83,15 @@ const StoreContextProvider = (props: any) => {
     return Math.round(totalAmount * 100) / 100;
   }
 
-const fetchFoodList = async () => {
-  try {
-    const response = await axios.get(url + "/api/food/list");
-    setFoodList(response.data.data);
-  } finally {
-    setFoodListLoading(false);
-  }
-}
-
-  const loadCartData = async (token: string) => {
-    if (!token) return;
-
-    try {
-      const response = await axios.get(url + "/api/cart/list", {
-        headers: { token },
-      });
-
-      setCartItems(response.data.cartData || {});
-    } catch (error) {
-      console.error("loadCartData failed:", error);
-    }
-  };
-
   useEffect(() => {
-    async function fetchData() {
-      await fetchFoodList();
-      const storedToken = localStorage.getItem("token");
-      if (storedToken) {
-        setToken(storedToken);
-        await loadCartData(storedToken);
-      }
+    const storedToken = localStorage.getItem("token");
+    if (storedToken) {
+      setToken(storedToken);
     }
-    fetchData();
   }, []);
   
   const storeValue: StoreContextType = {
-    foodList: foodList,
+    foodList: foodList || [],
     cartItems,
     setCartItems,
     addToCart,
