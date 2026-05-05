@@ -20,7 +20,6 @@ const StoreContextProvider = (props: any) => {
   // Use SWR for food list caching
   const { data: swrFoodList, error: foodListError, isLoading: foodListLoading } = useSWR(`${url}/api/food/list`, fetcher);
 
-  // Update foodList state when SWR data is available
   useEffect(() => {
     if (swrFoodList) {
       setFoodList(swrFoodList);
